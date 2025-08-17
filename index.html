@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agile Energy X — Webpages & Infographics Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#00ff88">
+  <style>
+    :root{--bg:#0b0f0c;--panel:rgba(255,255,255,.03);--accent:#00ff88;--text:#d6ffe6;--muted:#9debbd}
+    body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 20% -10%, rgba(0,255,136,.12), transparent 60%),
+                  radial-gradient(800px 400px at 120% 10%, rgba(0,255,200,.08), transparent 60%), var(--bg); color:var(--text)}
+    .wrap{max-width:1200px;margin:0 auto;padding:28px 16px 80px}
+    .card{background:var(--panel); border:1px solid rgba(0,255,136,.18); border-radius:18px; padding:18px; backdrop-filter: blur(4px)}
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(1,minmax(0,1fr))}
+    @media(min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    .item{transition:transform .2s ease, box-shadow .2s ease; box-shadow:0 10px 30px rgba(0,255,136,.06)}
+    .item:hover{transform:translateY(-3px); box-shadow:0 14px 42px rgba(0,255,136,.16)}
+    a.t{color:#7bffca}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="flex items-center gap-4 mb-6">
+      <img src="assets/aex_logo_hd.png" alt="Agile Energy X" style="width:64px;height:64px;border-radius:9999px;"/>
+      <div>
+        <h1 class="text-3xl font-extrabold leading-tight">Agile Energy X — Webpages & Infographics</h1>
+        <p class="opacity-80">All proposed Webpages</span></p>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- CARDS -->
+      <a href="green-raas/index.html" class="card item block no-underline">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(180deg, rgba(0,255,136,.22), rgba(0,255,136,.06))"></div>
+          <h2 class="font-bold">Green RaaS: From E‑Waste to Essential Infrastructure</h2>
+        </div>
+        <p class="text-sm opacity-80">Green RaaS (Randomness‑as‑a‑Service) concept turning e‑waste ASICs and curtailed renewables into secure entropy.</p>
+      </a>
+      <a href="strategic-report-visualizer/index.html" class="card item block no-underline">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(180deg, rgba(0,255,136,.22), rgba(0,255,136,.06))"></div>
+          <h2 class="font-bold">AEX Strategic Report Visualizer</h2>
+        </div>
+        <p class="text-sm opacity-80">Interactive strategic report visualizer summarizing the TEPCO × AEX opportunity landscape.</p>
+      </a>
+      <a href="bitcoin-energy-asset-report/index.html" class="card item block no-underline">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(180deg, rgba(0,255,136,.22), rgba(0,255,136,.06))"></div>
+          <h2 class="font-bold">Bitcoin: From Energy to Global Asset (Report + Infographic)</h2>
+        </div>
+        <p class="text-sm opacity-80">Comprehensive explainer tying energy → compute → global finance with charts and an infographic.</p>
+      </a>
+      <a href="hitachi-green-city-antifragile/index.html" class="card item block no-underline">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(180deg, rgba(0,255,136,.22), rgba(0,255,136,.06))"></div>
+          <h2 class="font-bold">Hitachi Green City: Antifragile Carbon Circularity Hub</h2>
+        </div>
+        <p class="text-sm opacity-80">Project Antifragile: Hitachi City circular carbon economy with waste heat × biomass × SAF.</p>
+      </a>
+      <a href="bhutan-japan-uce/index.html" class="card item block no-underline">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(180deg, rgba(0,255,136,.22), rgba(0,255,136,.06))"></div>
+          <h2 class="font-bold">Bhutan × Japan: Ultimate Circular Economy (UCE)</h2>
+        </div>
+        <p class="text-sm opacity-80">Bhutan × Japan UCE flagship: DAC → CO₂‑to‑graphite → computing + heat → aquaponics & biogas.</p>
+      </a>
+    </section>
+
+    <footer class="mt-12 text-sm opacity-80">
+      <p>&copy; 2025 Agile Energy X.</p>
+    </footer>
+  </div>
+</body>
+</html>

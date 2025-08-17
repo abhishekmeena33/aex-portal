@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green RaaS: From E-Waste to Essential Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #F2A154;
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00A6A6;
+        }
+        .kpi-label {
+            margin-top: 0.5rem;
+            color: #772D8B;
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #772D8B;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #4a5568;
+            margin-bottom: 3rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            padding-left: 2.5rem;
+            border-left: 4px solid #F2A154;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -11px;
+            top: 0;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background-color: #F26A4B;
+            border: 3px solid #f0f4f8;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#772D8B] text-white p-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2">From E-Waste to Entropy</h1>
+        <p class="text-xl md:text-2xl font-light">Transforming Obsolete Bitcoin Miners into a Green "Randomness-as-a-Service" Utility</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="problem" class="my-12">
+            <h2 class="section-title">The Twin Crises of Digital Progress</h2>
+            <p class="section-intro">The rapid pace of technological advancement creates two significant, interconnected challenges: a growing mountain of electronic waste and a paradoxical waste of clean energy. Our initiative tackles both head-on.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="kpi-card">
+                    <div class="kpi-value">1,920 GWh</div>
+                    <p class="kpi-label">Renewable Energy Curtailed in Japan (FY2023)</p>
+                    <p class="mt-4 text-gray-600">Enough to power 450,000 households for a year, this clean energy was simply discarded due to grid limitations.</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">Millions</div>
+                    <p class="kpi-label">Of Obsolete ASIC Miners Discarded</p>
+                    <p class="mt-4 text-gray-600">Specialized hardware like the Antminer S9 (4.2 kg) becomes unprofitable in 2-3 years, contributing tons of e-waste annually.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="flow" class="my-16">
+            <h2 class="section-title">Redefining the Lifecycle of a Miner</h2>
+            <p class="section-intro">Instead of the linear path from operation to landfill, we introduce a circular model that unlocks hidden value from hardware and energy that would otherwise be lost.</p>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-xl font-bold text-center mb-6 text-[#772D8B]">The Fate of an Obsolete Miner: A New Path</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center">
+                    <div class="p-4 border-2 border-dashed border-red-300 rounded-lg">
+                        <h4 class="font-bold text-red-600">Path 1: Discard</h4>
+                        <p class="text-6xl my-2">🗑️</p>
+                        <p>Contributes to e-waste, losing all embodied energy and material value.</p>
+                    </div>
+                    <div class="p-4 border-2 border-dashed border-blue-300 rounded-lg">
+                        <h4 class="font-bold text-blue-600">Path 2: Inefficient Mining</h4>
+                        <p class="text-6xl my-2">📉</p>
+                        <p>Operates at a loss, consuming energy for diminishing returns.</p>
+                    </div>
+                    <div class="p-4 border-4 border-solid border-green-500 rounded-lg bg-green-50">
+                        <h4 class="font-bold text-green-700">⭐ Path 3: Repurpose (Our Solution)</h4>
+                        <p class="text-6xl my-2">♻️</p>
+                        <p>Becomes a source of secure randomness and beneficial heat, powered by green energy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="market" class="my-16">
+            <h2 class="section-title">The Surging Demand for Digital Trust</h2>
+            <p class="section-intro">True randomness is the bedrock of modern digital security. From cryptography to online gaming, the need for verifiable, high-quality entropy is creating a significant and rapidly growing global market.</p>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4 text-[#772D8B]">Global True Random Number Generator (TRNG) Market Growth</h3>
+                <div class="chart-container">
+                    <canvas id="marketChart"></canvas>
+                </div>
+                <p class="text-center mt-4 text-gray-600">The market is projected to more than double in just five years, with a Compound Annual Growth Rate (CAGR) of approximately 15%.</p>
+            </div>
+        </section>
+
+        <section id="solution" class="my-16">
+            <h2 class="section-title">How It Works: From E-Waste to Entropy</h2>
+            <p class="section-intro">We don't make the ASIC miners random; we use their powerful hashing capability to refine and purify randomness from a true physical source. This "whitening" process ensures a high-quality, secure output.</p>
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <div class="flex flex-col md:flex-row items-center justify-around text-center">
+                    <div class="flex flex-col items-center p-4">
+                         <p class="text-6xl mb-2">🎲</p>
+                         <h4 class="font-bold text-lg">1. Raw Entropy Input</h4>
+                         <p class="max-w-xs">A small hardware module generates true randomness from physical noise (e.g., thermal noise).</p>
+                    </div>
+                    <div class="flow-arrow mx-4 my-4 md:my-0 transform md:rotate-0">→</div>
+                    <div class="flex flex-col items-center p-4">
+                        <p class="text-6xl mb-2">⚙️</p>
+                        <h4 class="font-bold text-lg">2. ASIC Conditioning</h4>
+                        <p class="max-w-xs">The miner's SHA-256 cores process the raw bits, removing biases and distributing entropy uniformly.</p>
+                    </div>
+                    <div class="flow-arrow mx-4 my-4 md:my-0 transform md:rotate-0">→</div>
+                    <div class="flex flex-col items-center p-4">
+                        <p class="text-6xl mb-2">🔑</p>
+                        <h4 class="font-bold text-lg">3. Secure Random Output</h4>
+                        <p class="max-w-xs">The final output is a cryptographically secure, verifiable random stream delivered via a cloud API.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="heat" class="my-16">
+            <h2 class="section-title">More Than Just Bits: The Power of Waste Heat</h2>
+            <p class="section-intro">A single repurposed miner is not just a digital utility; it's a 1.3 kW heater. By capturing and redirecting this thermal energy, we create a symbiotic relationship with local green initiatives, turning a byproduct into a valuable asset.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="kpi-card">
+                    <p class="text-6xl mb-2">🐟</p>
+                    <p class="kpi-label">Eel Farming</p>
+                    <p class="mt-4 text-gray-600">Waste heat maintains optimal tank temperatures (27°C), boosting growth and creating a profitable local industry, as proven in Bibai, Hokkaido.</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-6xl mb-2">❄️</p>
+                    <p class="kpi-label">Snow Melting</p>
+                    <p class="mt-4 text-gray-600">One miner can keep ~4-5 m² of pavement ice-free, improving safety at public facilities and reducing removal costs in snowy regions.</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-6xl mb-2">🌿</p>
+                    <p class="kpi-label">Aquaponics & Greenhouses</p>
+                    <p class="mt-4 text-gray-600">Provides consistent warmth for year-round cultivation of fish and vegetables, enhancing local food security and creating educational opportunities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="my-16">
+            <h2 class="section-title">Strategic Comparison</h2>
+            <p class="section-intro">When evaluating the alternatives for obsolete miners, our Randomness-as-a-Service model offers a unique combination of high ROI potential, sustainability, and innovation.</p>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4 text-[#772D8B]">Comparing Obsolete Miner Strategies</h3>
+                <div class="chart-container h-96">
+                    <canvas id="strategyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="my-16">
+            <h2 class="section-title">Roadmap to a Green Digital Utility</h2>
+            <p class="section-intro">Our vision unfolds in three strategic phases, moving from a localized pilot to a nationwide network of green randomness beacons.</p>
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="text-lg font-bold text-[#F26A4B]">Phase 1: Pilot & Demonstration (Year 1)</h4>
+                        <p class="text-gray-600">Deploy ~20 miners in Bibai, Hokkaido. Integrate waste heat with eel farm. Launch educational AR game and prove the end-to-end concept.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="text-lg font-bold text-[#F2A154]">Phase 2: Expansion & Commercialization (Years 2-3)</h4>
+                        <p class="text-gray-600">Expand to new sites like Toyotomi. Achieve key certifications (NIST, FIPS). Commercially launch the RaaS platform with tiered pricing.</p>
+                    </div>
+                    <div class="timeline-item border-l-transparent pb-0">
+                        <div class="timeline-dot"></div>
+                        <h4 class="text-lg font-bold text-[#00A6A6]">Phase 3: Nationwide Scale-Up (Years 3-5)</h4>
+                        <p class="text-gray-600">Establish a network of nodes across Japan. Develop a unified cloud platform with global redundancy. Explore secondary HPC/AI hosting opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#772D8B] text-white p-6 text-center mt-12">
+        <p>Agile Energy X | Pioneering a sustainable and secure digital future.</p>
+    </footer>
+
+    <script>
+        function wrapLabel(str, max_width) {
+            if (str.length <= max_width) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let current_line = '';
+            for (const word of words) {
+                if ((current_line + ' ' + word).trim().length > max_width && current_line.length > 0) {
+                    lines.push(current_line);
+                    current_line = word;
+                } else {
+                    current_line = (current_line + ' ' + word).trim();
+                }
+            }
+            if (current_line.length > 0) {
+                lines.push(current_line);
+            }
+            return lines;
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            }
+            return label;
+        };
+        
+        const sharedChartOptions = {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#4a5568',
+                        font: {
+                            family: "'Poppins', sans-serif",
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: '#2d3748',
+                    titleFont: {
+                        family: "'Poppins', sans-serif",
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    bodyFont: {
+                        family: "'Poppins', sans-serif",
+                        size: 12
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { 
+                        color: '#4a5568',
+                        font: { family: "'Poppins', sans-serif" }
+                    },
+                    grid: { color: '#e2e8f0' }
+                },
+                x: {
+                    ticks: { 
+                        color: '#4a5568',
+                        font: { family: "'Poppins', sans-serif" }
+                    },
+                    grid: { display: false }
+                }
+            }
+        };
+
+        const palette = {
+            blue: '#00A6A6',
+            purple: '#772D8B',
+            yellow: '#F2E635',
+            orange: '#F2A154',
+            red: '#F26A4B'
+        };
+
+        const marketChartCtx = document.getElementById('marketChart').getContext('2d');
+        new Chart(marketChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['2025', '2026', '2027', '2028', '2029', '2030'],
+                datasets: [{
+                    label: 'Global TRNG Market (in Billion USD)',
+                    data: [3.8, 4.37, 5.03, 5.78, 6.65, 7.7],
+                    fill: true,
+                    borderColor: palette.blue,
+                    backgroundColor: 'rgba(0, 166, 166, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: { ...sharedChartOptions, scales: { ...sharedChartOptions.scales, y: { ...sharedChartOptions.scales.y, ticks: { ...sharedChartOptions.scales.y.ticks, callback: (value) => '$' + value + 'B' }}}}
+        });
+
+        const strategyChartCtx = document.getElementById('strategyChart').getContext('2d');
+        new Chart(strategyChartCtx, {
+            type: 'radar',
+            data: {
+                labels: ['ROI Potential', 'Sustainability', 'Innovation', 'Low Upfront Cost', 'Feasibility'],
+                datasets: [
+                {
+                    label: 'RNG-as-a-Service (Our Plan)',
+                    data: [9, 10, 9, 7, 8],
+                    borderColor: palette.blue,
+                    backgroundColor: 'rgba(0, 166, 166, 0.2)',
+                    pointBackgroundColor: palette.blue,
+                }, 
+                {
+                    label: 'Continue Mining',
+                    data: [2, 1, 1, 9, 10],
+                    borderColor: palette.red,
+                    backgroundColor: 'rgba(242, 106, 75, 0.2)',
+                    pointBackgroundColor: palette.red,
+                },
+                {
+                    label: 'Discard/Recycle',
+                    data: [0, 3, 0, 10, 9],
+                    borderColor: palette.orange,
+                    backgroundColor: 'rgba(242, 161, 84, 0.2)',
+                    pointBackgroundColor: palette.orange,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#4a5568', font: { family: "'Poppins', sans-serif" }}
+                    },
+                    tooltip: {
+                        callbacks: { title: tooltipTitleCallback },
+                        backgroundColor: '#2d3748'
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#e2e8f0' },
+                        grid: { color: '#e2e8f0' },
+                        pointLabels: { color: palette.purple, font: { size: 13, weight: 'bold', family: "'Poppins', sans-serif" }},
+                        ticks: {
+                            backdropColor: 'rgba(255, 255, 255, 0.75)',
+                            color: '#4a5568'
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

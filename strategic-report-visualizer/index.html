@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agile Energy X: Strategic Report Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .section-card {
+            transition: all 0.3s ease-in-out;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+        .flow-arrow {
+            position: relative;
+            font-size: 2rem;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="AEX logo.png" alt="Agile Energy X Logo" class="h-14 w-14 mr-3">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Agile Energy X</h1>
+                        <p class="text-sm text-gray-500">Detailed Strategic Report Visualizer</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#section1" class="text-gray-600 hover:text-blue-600 font-medium">Situation</a>
+                    <a href="#section2" class="text-gray-600 hover:text-blue-600 font-medium">RNGaaS</a>
+                    <a href="#section3" class="text-gray-600 hover:text-blue-600 font-medium">Alternatives</a>
+                    <a href="#section4" class="text-gray-600 hover:text-blue-600 font-medium">Recommendation</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <!-- Section 1: Situational Analysis -->
+        <section id="section1" class="mb-16 scroll-mt-20">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md section-card">
+                <h2 class="text-3xl font-bold mb-2 text-blue-700">Section 1: Situational Analysis</h2>
+                <p class="text-gray-600 mb-6">This section establishes the foundation by analyzing the available assets (aging ASIC miners), the core mandate (a non-Bitcoin KPI), and the strategic context. This includes TEPCO's challenge with renewable energy curtailment (projected to start in FY2025) and Japan's national push for a circular economy, which creates a significant e-waste problem for obsolete ASICs.</p>
+                
+                <div class="grid lg:grid-cols-2 gap-8 items-start">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3">Hardware Asset Profile</h3>
+                        <p class="text-sm text-gray-500 mb-4">The two sites possess distinct fleets of SHA-256 ASICs. Kuroho's Antminer S9s are older and largely idle, representing a "zero opportunity cost" asset. Sekiya's newer AvalonMiners are still active, meaning repurposing them incurs a direct opportunity cost of forgone mining revenue.</p>
+                        <div class="chart-container">
+                            <canvas id="assetChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3">Grid Balancing & Circular Economy Value</h3>
+                        <p class="text-sm text-gray-500 mb-4">The project directly addresses two key TEPCO imperatives. The data centers can act as a dispatchable load to absorb surplus renewable energy, enhancing grid stability. It also provides a powerful circular economy showcase by giving obsolete hardware a second life.</p>
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 h-full">
+                            <div class="flex flex-col md:flex-row justify-around items-center gap-4">
+                                <!-- Grid Balancing -->
+                                <div class="text-center">
+                                    <h4 class="font-semibold text-blue-800 mb-2">Grid Balancing Service</h4>
+                                    <div class="flex items-center justify-center gap-2">
+                                        <div class="text-center">
+                                            <span class="text-3xl">☀️💨</span>
+                                            <p class="text-xs">Surplus Renewables</p>
+                                        </div>
+                                        <div class="flow-arrow">→</div>
+                                        <div class="text-center p-2 bg-white rounded-lg shadow">
+                                            <span class="text-3xl">💻</span>
+                                            <p class="text-xs">Dispatchable Load (ASICs)</p>
+                                        </div>
+                                        <div class="flow-arrow">→</div>
+                                        <div class="text-center">
+                                            <span class="text-3xl">📈</span>
+                                            <p class="text-xs">Grid Stability</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Circular Economy -->
+                                <div class="text-center mt-6 md:mt-0">
+                                    <h4 class="font-semibold text-blue-800 mb-2">Circular Economy Impact</h4>
+                                    <div class="flex items-center justify-center gap-2">
+                                        <div class="text-center">
+                                            <span class="text-3xl">⛏️</span>
+                                            <p class="text-xs">Obsolete ASICs</p>
+                                        </div>
+                                        <div class="flow-arrow">→</div>
+                                        <div class="text-center p-2 bg-white rounded-lg shadow">
+                                            <span class="text-3xl">♻️</span>
+                                            <p class="text-xs">Second Life as TRNG</p>
+                                        </div>
+                                        <div class="flow-arrow">→</div>
+                                        <div class="text-center">
+                                            <span class="text-3xl">🗑️</span>
+                                            <p class="text-xs">Reduced E-Waste</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: RNGaaS Proposal Evaluation -->
+        <section id="section2" class="mb-16 scroll-mt-20">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md section-card">
+                <h2 class="text-3xl font-bold mb-2 text-green-700">Section 2: RNGaaS Proposal Evaluation</h2>
+                <p class="text-gray-600 mb-6">This section evaluates the proposal to turn the ASICs into a "Randomness-as-a-Service" (RNGaaS) platform. The technical plan involves retrofitting miners with external hardware True Random Number Generators (TRNGs) and developing custom firmware. The key market differentiator is not just randomness, but *"certified green, circular-economy randomness,"* appealing to ESG-conscious customers.</p>
+
+                <div class="grid lg:grid-cols-2 gap-8 items-start">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3">Agro-Thermal Symbiosis & Local Partnerships</h3>
+                        <p class="text-sm text-gray-500 mb-4">A 50kW data center is a 50kW heater. This waste heat can be valorized through local partnerships, creating economic value, community goodwill, and potentially qualifying for J-Credits by displacing fossil fuel use.</p>
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200 h-full">
+                           <div class="flex flex-col items-center">
+                                <div class="p-3 bg-white rounded-lg shadow mb-4 text-center">
+                                     <span class="text-3xl">🖥️</span>
+                                     <p class="font-semibold">Data Center (Kuroho/Sekiya)</p>
+                                     <p class="text-xs text-red-500">Generates Waste Heat (🔥)</p>
+                                </div>
+                                <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                                    <div class="p-3 bg-white rounded-lg shadow">
+                                        <h5 class="font-semibold text-green-800">Kuroho (Gunma)</h5>
+                                        <p class="text-2xl mt-1">🥬</p>
+                                        <p class="text-sm">Heat for Greenhouses</p>
+                                        <p class="text-xs text-gray-500">Partner: Green Leaf Group</p>
+                                    </div>
+                                    <div class="p-3 bg-white rounded-lg shadow">
+                                        <h5 class="font-semibold text-green-800">Sekiya (Tochigi)</h5>
+                                        <p class="text-2xl mt-1">🐄♨️</p>
+                                        <p class="text-sm">Hot Water for Dairy/Onsen</p>
+                                        <p class="text-xs text-gray-500">Partners: Senbonmatsu Farm, Shiobara Onsen</p>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3">RNGaaS Market Potential</h3>
+                        <p class="text-sm text-gray-500 mb-4">The global market for high-quality randomness is projected to reach ¥1.26 trillion by 2030, driven by needs in cryptography, finance, IoT, and gaming. Our "green" branding can capture a premium segment of this market.</p>
+                        <div class="chart-container">
+                            <canvas id="marketChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Strategic Alternatives -->
+        <section id="section3" class="mb-16 scroll-mt-20">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md section-card">
+                <h2 class="text-3xl font-bold mb-2 text-purple-700">Section 3: Strategic Alternatives</h2>
+                <p class="text-gray-600 mb-6">This section explores higher-value services built on the same core SHA-256 capability. These alternatives move up the value chain from a raw commodity to high-trust enterprise services, leveraging TEPCO's brand as a provider of critical national infrastructure.</p>
+                
+                <div class="grid lg:grid-cols-2 gap-8 items-start">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3">Value Chain of Cryptographic Services</h3>
+                        <p class="text-sm text-gray-500 mb-4">This shows the progression from a basic service to high-value solutions. Each step builds on the last, leveraging the same core hardware but adding layers of software, compliance, and trust.</p>
+                        <div class="bg-purple-50 p-4 rounded-lg h-full">
+                            <div class="space-y-3 w-full">
+                                <div class="p-3 bg-white rounded-lg shadow">
+                                    <h4 class="font-semibold">🎲 RNGaaS</h4>
+                                    <p class="text-xs text-gray-600">Commodity service providing raw random data.</p>
+                                </div>
+                                <div class="text-center text-purple-400 font-bold">↓</div>
+                                <div class="p-3 bg-white rounded-lg shadow">
+                                    <h4 class="font-semibold">🔗 HaaS (Hashing-as-a-Service)</h4>
+                                    <p class="text-xs text-gray-600">B2B utility for enterprise data integrity checks (e.g., log files, documents).</p>
+                                </div>
+                                <div class="text-center text-purple-400 font-bold">↓</div>
+                                <div class="p-3 bg-white rounded-lg shadow">
+                                    <h4 class="font-semibold">⏲️ Trusted Timestamping Authority (TSA)</h4>
+                                    <p class="text-xs text-gray-600">High-value, legally significant proof of existence (RFC 3161 compliant). Competes with Seiko, GMO GlobalSign.</p>
+                                </div>
+                                <div class="text-center text-purple-400 font-bold">↓</div>
+                                <div class="p-3 bg-white rounded-lg shadow">
+                                    <h4 class="font-semibold">🆔 DID Infrastructure</h4>
+                                    <p class="text-xs text-gray-600">Strategic role as a "trust anchor" for Japan's national Decentralized Identity ecosystem (e.g., for DVCC).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <h3 class="text-xl font-semibold mb-3">Comparative Analysis Table</h3>
+                        <p class="text-sm text-gray-500 mb-4">A summary of how each alternative scores against key criteria like technical complexity, revenue potential, and strategic value to TEPCO.</p>
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-purple-100">
+                                <tr>
+                                    <th class="py-2 px-3 text-left text-xs font-semibold text-purple-800 uppercase tracking-wider">Criterion</th>
+                                    <th class="py-2 px-3 text-center text-xs font-semibold text-purple-800 uppercase tracking-wider">RNGaaS</th>
+                                    <th class="py-2 px-3 text-center text-xs font-semibold text-purple-800 uppercase tracking-wider">HaaS</th>
+                                    <th class="py-2 px-3 text-center text-xs font-semibold text-purple-800 uppercase tracking-wider">TSA</th>
+                                    <th class="py-2 px-3 text-center text-xs font-semibold text-purple-800 uppercase tracking-wider">DID Infra</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 text-sm">
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">KPI Alignment</td><td class="py-2 px-3 text-center">Excellent</td><td class="py-2 px-3 text-center">Excellent</td><td class="py-2 px-3 text-center">Excellent</td><td class="py-2 px-3 text-center">Excellent</td></tr>
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">Technical Complexity</td><td class="py-2 px-3 text-center">Medium</td><td class="py-2 px-3 text-center">Low</td><td class="py-2 px-3 text-center">High</td><td class="py-2 px-3 text-center">Very High</td></tr>
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">Revenue Potential</td><td class="py-2 px-3 text-center">Moderate</td><td class="py-2 px-3 text-center">Low</td><td class="py-2 px-3 text-center">High</td><td class="py-2 px-3 text-center">Transformational</td></tr>
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">Strategic Value</td><td class="py-2 px-3 text-center">High</td><td class="py-2 px-3 text-center">Medium</td><td class="py-2 px-3 text-center">Very High</td><td class="py-2 px-3 text-center">Extremely High</td></tr>
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">Implementation Time</td><td class="py-2 px-3 text-center">Short</td><td class="py-2 px-3 text-center">Short</td><td class="py-2 px-3 text-center">Medium</td><td class="py-2 px-3 text-center">Long</td></tr>
+                                <tr class="hover:bg-purple-50"><td class="py-2 px-3 font-medium">Competitive Edge</td><td class="py-2 px-3 text-center">Strong</td><td class="py-2 px-3 text-center">Low</td><td class="py-2 px-3 text-center">Very Strong</td><td class="py-2 px-3 text-center">Unparalleled</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Recommendation -->
+        <section id="section4" class="mb-16 scroll-mt-20">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md section-card">
+                <h2 class="text-3xl font-bold mb-2 text-teal-700">Section 4: Recommendation & Phased Strategy</h2>
+                <p class="text-gray-600 mb-6">The final recommendation is a phased, hybrid strategy to build a unified **"Cryptographic Utility Services"** platform. This approach starts with the most straightforward path to meet the KPI and progressively builds towards a high-value, strategic position as a core trust provider for Japan's digital economy.</p>
+                
+                <h3 class="text-xl font-semibold mb-6 text-center">The "Cryptographic Utility" Phased Rollout</h3>
+                <div class="space-y-8">
+                    <!-- Phase 1 -->
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">1</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-teal-800">Phase 1: KPI Fulfillment & Foundation (Months 1-9)</h4>
+                            <ul class="mt-2 list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Develop custom firmware for Antminer S9s (Kuroho) using open-source base.</li>
+                                <li>Procure and integrate off-the-shelf USB TRNG modules.</li>
+                                <li>Initiate partnership discussions with Green Leaf Group and Senbonmatsu Farm for waste heat.</li>
+                                <li><strong>Outcome:</strong> KPI met with a working RNGaaS prototype.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Phase 2 -->
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">2</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-teal-800">Phase 2: Commercialization & Value Expansion (Months 9-24)</h4>
+                             <ul class="mt-2 list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Launch a tiered service: RNGaaS (Tier 1), HaaS (Tier 2), TSA (Tier 3).</li>
+                                <li>Develop RFC 3161 compliant application layer for the TSA service.</li>
+                                <li>Begin formal MIC certification process for the TSA, leveraging TEPCO's brand.</li>
+                                <li><strong>Outcome:</strong> Diversified revenue streams and a certified, premium TSA product.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <!-- Phase 3 -->
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">3</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-teal-800">Phase 3: Strategic Positioning & Ecosystem Integration (Years 2-5)</h4>
+                             <ul class="mt-2 list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Engage with Japan's Digital Agency and the DVCC consortium (MUFG, Fujitsu, etc.).</li>
+                                <li>Position the certified TSA as a foundational "trust anchor" for the national DID/VC ecosystem.</li>
+                                <li>Offer the service as a low-cost, domestically operated utility for verifying credentials.</li>
+                                <li><strong>Outcome:</strong> TEPCO becomes a provider of critical digital trust infrastructure.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+            <p>&copy; 2025 Agile Energy X. A strategic vision for a sustainable and trusted digital future.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart for Hardware Assets
+        const assetCtx = document.getElementById('assetChart').getContext('2d');
+        new Chart(assetCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Kuroho (Antminer S9)', 'Sekiya (AvalonMiner 1047)'],
+                datasets: [{
+                    label: 'Total Site Power (kW)',
+                    data: [84, 95],
+                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1,
+                    yAxisID: 'y'
+                }, {
+                    label: 'Total Hash Rate (PH/s)',
+                    data: [0.85, 1.48],
+                    backgroundColor: 'rgba(239, 68, 68, 0.6)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 1,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Power (kW)' }
+                    },
+                    y1: {
+                        beginAtZero: true,
+                        type: 'linear',
+                        position: 'right',
+                        title: { display: true, text: 'Hash Rate (PH/s)' },
+                        grid: { drawOnChartArea: false }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            }
+        });
+
+        // Chart for Market Potential
+        const marketCtx = document.getElementById('marketChart').getContext('2d');
+        new Chart(marketCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Existing Global Market', 'Agile Energy X Target Segment (Green RNGaaS)'],
+                datasets: [{
+                    label: 'Market Value',
+                    data: [1260, 50], // ¥1.26 Trillion total, showing a potential target segment
+                    backgroundColor: [
+                        'rgba(22, 163, 74, 0.2)',
+                        'rgba(22, 163, 74, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(22, 163, 74, 1)',
+                        'rgba(34, 197, 94, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Global RNG Market Potential (Projected ¥1.26T by 2030)'
+                    }
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin: From Energy to Global Asset (Full Report & Infographic)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #F0F8FF;
+            color: #0A2342;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #2CA58D;
+        }
+        .kpi-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4682B4;
+            margin-top: 0.5rem;
+        }
+        .flowchart-step {
+            background-color: #fff;
+            border: 2px solid #87CEEB;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+            margin: 0 0.5rem;
+            min-width: 150px;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #4682B4;
+            align-self: center;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            padding-left: 2.5rem;
+            border-left: 3px solid #87CEEB;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.7rem;
+            top: 0;
+            height: 1.25rem;
+            width: 1.25rem;
+            background-color: #2CA58D;
+            border-radius: 9999px;
+            border: 3px solid #F0F8FF;
+        }
+        .accordion-header {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #e0f2fe;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #ffffff;
+            padding: 0 1.5rem;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+        .accordion-content.open {
+            padding: 1.5rem;
+        }
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.open .accordion-arrow {
+            transform: rotate(90deg);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 24px;
+            height: 24px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center my-12 relative">
+            <!-- Language Switcher -->
+            <div class="absolute top-0 right-0">
+                <select id="language-switcher" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="en" selected>English</option>
+                    <option value="ja">日本語</option>
+                </select>
+            </div>
+
+            <h1 id="main-title" class="text-4xl md:text-6xl font-black text-gray-900" style="color: #0A2342;">Bitcoin: From Energy to Asset</h1>
+            <p id="main-subtitle" class="mt-4 text-lg md:text-xl text-gray-600" style="color: #4682B4;">An Institutional Overview for Energy and Finance Leaders</p>
+        </header>
+
+        <main>
+            <section id="intro" class="mb-16">
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                        <div class="md:col-span-2">
+                            <h2 id="intro-title" class="text-3xl font-bold mb-4">What is Bitcoin? A Digital Commodity.</h2>
+                            <p id="intro-p1" class="text-lg mb-4">Bitcoin is a decentralized digital currency, a "Peer-to-Peer Electronic Cash System" that operates without a central bank or single administrator. It allows any two parties to transact directly using cryptographic proof instead of trust.</p>
+                            <p id="intro-p2" class="text-lg">Think of it as <span class="font-bold" style="color: #2CA58D;">digital gold</span>: it's scarce, durable, and divisible, but with a transparent and absolutely predictable supply schedule, making it a unique asset class.</p>
+                        </div>
+                        <div class="kpi-card bg-blue-50">
+                            <div class="kpi-value" style="color: #0A2342;">21M</div>
+                            <div id="kpi-supply" class="kpi-label">The unchangeable, absolute maximum supply of Bitcoin.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="comparison" class="mb-16">
+                 <h2 id="comparison-title" class="text-3xl font-bold text-center mb-8">Asset Properties: A Comparative Analysis</h2>
+                 <div class="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th id="th-feature" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: #2CA58D;">Bitcoin (BTC)</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gold</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fiat (EUR)</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Equities (AEX)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td id="td-issuer" class="px-6 py-4 whitespace-nowrap font-semibold">Issuer</td>
+                                <td id="td-issuer-btc" class="px-6 py-4 whitespace-nowrap font-bold" style="color: #0A2342;">Decentralized Protocol</td>
+                                <td id="td-issuer-gold" class="px-6 py-4 whitespace-nowrap">None (Natural)</td>
+                                <td id="td-issuer-fiat" class="px-6 py-4 whitespace-nowrap">Central Bank</td>
+                                <td id="td-issuer-aex" class="px-6 py-4 whitespace-nowrap">Corporation</td>
+                            </tr>
+                            <tr>
+                                <td id="td-supply" class="px-6 py-4 whitespace-nowrap font-semibold">Supply Dynamics</td>
+                                <td id="td-supply-btc" class="px-6 py-4 whitespace-nowrap font-bold" style="color: #0A2342;">Absolutely Scarce (21M Cap)</td>
+                                <td id="td-supply-gold" class="px-6 py-4 whitespace-nowrap">Relatively Scarce</td>
+                                <td id="td-supply-fiat" class="px-6 py-4 whitespace-nowrap">Elastic (Unlimited)</td>
+                                <td id="td-supply-aex" class="px-6 py-4 whitespace-nowrap">Elastic</td>
+                            </tr>
+                            <tr>
+                                <td id="td-decentralization" class="px-6 py-4 whitespace-nowrap font-semibold">Decentralization</td>
+                                <td id="td-decentralization-btc" class="px-6 py-4 whitespace-nowrap font-bold" style="color: #0A2342;">High</td>
+                                <td id="td-decentralization-gold" class="px-6 py-4 whitespace-nowrap">High (Ownership)</td>
+                                <td id="td-decentralization-fiat" class="px-6 py-4 whitespace-nowrap">Centralized</td>
+                                <td id="td-decentralization-aex" class="px-6 py-4 whitespace-nowrap">Centralized</td>
+                            </tr>
+                             <tr>
+                                <td id="td-verification" class="px-6 py-4 whitespace-nowrap font-semibold">Verification</td>
+                                <td id="td-verification-btc" class="px-6 py-4 whitespace-nowrap font-bold" style="color: #0A2342;">Cryptographic Proof</td>
+                                <td id="td-verification-gold" class="px-6 py-4 whitespace-nowrap">Physical Assay</td>
+                                <td id="td-verification-fiat" class="px-6 py-4 whitespace-nowrap">Trust in Issuer</td>
+                                <td id="td-verification-aex" class="px-6 py-4 whitespace-nowrap">Trust in Auditors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </section>
+
+            <section id="mining-engine" class="mb-16">
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <h2 id="mining-title" class="text-3xl font-bold text-center mb-2">The Engine Room: What is Bitcoin Mining?</h2>
+                    <p id="mining-p1" class="text-lg text-center mb-8 max-w-3xl mx-auto">Mining is the industrial process that secures the network and issues new coins. It's a decentralized record-keeping service with three critical functions, transforming energy into digital value.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-center">
+                        <div class="flowchart-step">
+                            <div class="text-4xl mb-2">✅</div>
+                            <h3 id="flow-1-title" class="font-bold text-lg">1. Transaction Validation</h3>
+                            <p id="flow-1-p" class="text-sm">Miners verify and bundle transactions into new blocks.</p>
+                        </div>
+                        <div class="flowchart-arrow mx-4 my-4 md:my-0">&rarr;</div>
+                        <div class="flowchart-step">
+                            <div class="text-4xl mb-2">🔒</div>
+                            <h3 id="flow-2-title" class="font-bold text-lg">2. Network Security</h3>
+                            <p id="flow-2-p" class="text-sm">Immense computational work (Proof-of-Work) makes the blockchain history immutable.</p>
+                        </div>
+                        <div class="flowchart-arrow mx-4 my-4 md:my-0">&rarr;</div>
+                        <div class="flowchart-step">
+                            <div class="text-4xl mb-2">💰</div>
+                            <h3 id="flow-3-title" class="font-bold text-lg">3. Currency Issuance</h3>
+                            <p id="flow-3-p" class="text-sm">Successful miners are rewarded with newly created bitcoin.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="mechanism" class="mb-16">
+                <h2 id="mechanism-title" class="text-3xl font-bold text-center mb-8">The Mechanism: How Mining Creates Value</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 id="halving-title" class="text-2xl font-bold mb-4">The "Halving": Programmed Scarcity</h3>
+                        <p id="halving-p1" class="mb-6">The reward for mining a block is cut in half approximately every four years. This event, the "halving," ensures a predictable, decreasing rate of new supply, underpinning Bitcoin's deflationary nature.</p>
+                        <div class="relative">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <p id="halving-2012-t" class="font-bold">2012 Halving</p>
+                                <p id="halving-2012-p">Reward reduced to 25 BTC</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <p id="halving-2016-t" class="font-bold">2016 Halving</p>
+                                <p id="halving-2016-p">Reward reduced to 12.5 BTC</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <p id="halving-2020-t" class="font-bold">2020 Halving</p>
+                                <p id="halving-2020-p">Reward reduced to 6.25 BTC</p>
+                            </div>
+                            <div class="timeline-item border-l-dashed">
+                                <div class="timeline-dot"></div>
+                                <p id="halving-2024-t" class="font-bold">2024 Halving</p>
+                                <p id="halving-2024-p">Reward reduced to 3.125 BTC</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 id="revenue-title" class="text-2xl font-bold mb-4">Miner Revenue Composition</h3>
+                        <p id="revenue-p1" class="mb-6">A miner's income comes from two sources: the block subsidy (new coins) and transaction fees. Over time, as the subsidy diminishes, fees are designed to become the primary incentive for securing the network.</p>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="value-chain" class="mb-16">
+                <h2 id="value-chain-title" class="text-3xl font-bold text-center mb-8">The Value Chain: A Three-Layered Nexus</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 id="layer-a-title" class="text-2xl font-bold mb-4 text-center">A) Energy: The Physical Layer</h3>
+                        <p id="layer-a-p1" class="text-center mb-6">Bitcoin mining is a unique industrial load: it's large, location-agnostic, and perfectly interruptible, making it a powerful partner for modern grids.</p>
+                        <div class="chart-container h-80">
+                            <canvas id="energyMixChart"></canvas>
+                        </div>
+                        <div class="mt-8 grid grid-cols-2 gap-4">
+                            <div class="kpi-card p-4 bg-green-50">
+                                <div class="kpi-value text-2xl">1.5 GW</div>
+                                <div id="kpi-grid" class="kpi-label text-sm">Power curtailed by Texas miners to stabilize the grid during Winter Storm Elliott.</div>
+                            </div>
+                            <div class="kpi-card p-4 bg-green-50">
+                                <div class="kpi-value text-2xl">63%</div>
+                                <div id="kpi-methane" class="kpi-label text-sm">Methane emission reduction by using flared gas for mining instead of venting.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 id="layer-b-title" class="text-2xl font-bold mb-4 text-center">B) Compute: The Digital Layer</h3>
+                        <p id="layer-b-p1" class="text-center mb-6">A relentless "arms race" for computational efficiency drives the industry. Miners use Application-Specific Integrated Circuits (ASICs) to perform trillions of calculations per second.</p>
+                        <div class="chart-container h-80">
+                             <canvas id="asicChart"></canvas>
+                        </div>
+                        <p id="layer-b-p2" class="text-center mt-8 text-sm text-gray-600">Lower efficiency (J/TH) is better, representing less energy consumed per calculation. This drives profitability and technological advancement.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 id="layer-c-title" class="text-2xl font-bold mb-4 text-center">C) Finance: The Global Layer</h3>
+                        <p id="layer-c-p1" class="text-center mb-6">The computational work, fueled by energy, creates a globally liquid financial asset. The maturation of this market includes public companies and regulated investment products.</p>
+                        <div class="chart-container h-80">
+                            <canvas id="marketCapChart"></canvas>
+                        </div>
+                        <div class="mt-8 kpi-card p-4 bg-yellow-50">
+                            <div id="kpi-etf-value" class="kpi-value text-2xl" style="color: #FFB700;">Spot ETFs</div>
+                            <div id="kpi-etf-label" class="kpi-label text-sm">The approval of Spot Bitcoin ETFs in major markets has provided a regulated on-ramp for mainstream institutional capital.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="outlook" class="mb-16">
+                <h2 id="outlook-title" class="text-3xl font-bold text-center mb-8">Strategic Outlook & Recommendations</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <h3 id="outlook-tepco-title" class="text-2xl font-bold mb-4">For the Energy Sector (TEPCO)</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-2xl mr-3">🤝</span>
+                                <div id="outlook-tepco-1"><span class="font-bold">Develop Partnerships:</span> Use Power Purchase Agreements (PPAs) with miners to de-risk and finance new renewable energy projects.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-2xl mr-3">💡</span>
+                                <div id="outlook-tepco-2"><span class="font-bold">Monetize Grid Services:</span> Offer demand response programs where miners are paid to curtail power, enhancing grid stability and creating new revenue.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 font-bold text-2xl mr-3">💰</span>
+                                <div id="outlook-tepco-3"><span class="font-bold">Utilize Stranded Assets:</span> Deploy mining operations at remote or curtailed energy sources to convert wasted power into a global commodity.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <h3 id="outlook-aex-title" class="text-2xl font-bold mb-4">For the Financial Sector (AEX Investors)</h3>
+                         <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3">⚙️</span>
+                                <div id="outlook-aex-1"><span class="font-bold">Analyze Operational Efficiency:</span> Scrutinize a miner's hardware efficiency (J/TH). Lower is better and more resilient.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3">⚡️</span>
+                                <div id="outlook-aex-2"><span class="font-bold">Evaluate Energy Strategy:</span> Prioritize companies with low-cost, fixed-price power contracts for a durable competitive advantage.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3">🛡️</span>
+                                <div id="outlook-aex-3"><span class="font-bold">Assess Financial Management:</span> Look for prudent debt levels and sophisticated hedging strategies to manage volatility.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gemini-features" class="mb-16">
+                <h2 id="gemini-title" class="text-3xl font-bold text-center mb-8 border-t pt-12">✨ Strategic Scenario Modeler</h2>
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <p id="gemini-p1" class="text-lg text-center mb-6 max-w-3xl mx-auto">Explore potential future scenarios and their strategic implications. Enter a hypothetical market event below and let our AI model generate a tailored analysis for either the energy or financial sector.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="scenario-input" id="scenario-label" class="block text-lg font-medium text-gray-700 mb-2">Enter a Market Scenario:</label>
+                            <input type="text" id="scenario-input" class="w-full p-2 border border-gray-300 rounded-md" placeholder="e.g., A sudden 50% drop in Bitcoin price">
+                            <div class="mt-4 flex gap-4">
+                                <button id="generate-tepco" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2">
+                                    <span id="btn-tepco-text">Analyze for TEPCO</span>
+                                    <div id="loader-tepco" class="loader hidden"></div>
+                                </button>
+                                <button id="generate-aex" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                                    <span id="btn-aex-text">Analyze for AEX Investors</span>
+                                    <div id="loader-aex" class="loader hidden"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 id="analysis-title" class="text-xl font-bold mb-2">Generated Analysis:</h3>
+                            <div id="analysis-output" class="bg-gray-50 p-4 rounded-md h-48 overflow-y-auto border">
+                                <p id="analysis-placeholder" class="text-gray-500">Your AI-generated strategic analysis will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="full-report" class="space-y-6">
+                <h2 id="full-report-title" class="text-3xl font-bold text-center mb-8 border-t pt-12">Full Detailed Report</h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span id="report-part1-title">Part I: Bitcoin Fundamentals for the Institutional Decision-Maker</span>
+                        <span class="accordion-arrow text-2xl">&rarr;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <button class="summarize-btn mt-4 mb-2 bg-indigo-500 text-white font-bold py-1 px-3 rounded-md hover:bg-indigo-600 transition text-sm" data-section="1">✨ Summarize Section</button>
+                        <div class="prose max-w-none py-4 text-lg" data-content-id="report-section-1">
+                            <h3 id="report-s1-1-title" class="text-2xl font-bold mt-4 mb-2">Section 1.1: Deconstructing Bitcoin - A Peer-to-Peer Electronic Cash System</h3>
+                            <p id="report-s1-1-p1">To comprehend the strategic implications of Bitcoin mining for the energy and finance sectors, one must first understand the fundamental nature of Bitcoin itself. As outlined in the foundational 2008 whitepaper by the pseudonymous Satoshi Nakamoto, Bitcoin was conceived as "A Peer-to-Peer Electronic Cash System". Its primary purpose was to solve a long-standing problem in digital commerce: enabling online payments to be sent directly from one party to another without going through a financial institution.</p>
+                            <p id="report-s1-1-p2">Traditional online payment systems inherently rely on trusted third parties, such as banks and payment processors, to mediate transactions. This reliance, while functional, introduces several systemic weaknesses. It creates transaction costs to cover the intermediary's operations and profit margins, makes small, casual transactions economically unfeasible, and necessitates a degree of trust between parties that can lead to fraud and the need for reversible transactions. The core innovation of Bitcoin is its proposal of an electronic payment system based not on trust, but on cryptographic proof. This allows any two willing parties to transact directly, with the system's architecture providing the security and finality that a bank would otherwise offer.</p>
+                            <p id="report-s1-1-p3">This is achieved through a combination of several key properties that distinguish Bitcoin from any traditional financial system or asset:</p>
+                            <ul id="report-s1-1-ul1" class="list-disc pl-8 space-y-2">
+                                <li id="report-s1-1-li1"><b>Decentralization:</b> The Bitcoin network is not controlled by any single entity, whether a corporation, government, or central bank. It operates on a global network of computers (nodes) that collectively enforce the rules of the protocol. This removes single points of failure and control, making the system inherently resilient.</li>
+                                <li id="report-s1-1-li2"><b>Censorship Resistance:</b> Because there is no central administrator, no entity can arbitrarily block or freeze valid transactions. If a transaction adheres to the protocol's rules, it will be processed by the network. This property is fundamental to its role as a neutral global settlement layer.</li>
+                                <li id="report-s1-1-li3"><b>Fixed and Predictable Supply:</b> The Bitcoin protocol dictates that there will never be more than 21 million bitcoins in existence. The rate at which new bitcoins are created is predetermined and transparent, decreasing over time in a process known as the "halving". This makes Bitcoin a provably scarce digital asset, a stark contrast to traditional fiat currencies, which can be created by central banks in unlimited quantities, potentially leading to debasement and inflation.</li>
+                            </ul>
+                            <p id="report-s1-1-p4">For institutional decision-makers, it is useful to draw an analogy. Bitcoin is not a company; it is a protocol. In the same way that TCP/IP (Transmission Control Protocol/Internet Protocol) provides a universal, decentralized set of rules for the transfer of information across the internet, Bitcoin provides a universal, decentralized protocol for the transfer of value. It is a foundational layer of economic infrastructure, and its value proposition stems directly from its predictable scarcity and its independence from any central authority's control or manipulation. For an energy company like TEPCO, this means Bitcoin operates on a set of rigid, predictable rules. For financial market participants like AEX investors, it means its supply-side economics are entirely unique and constitute a primary driver of its long-term value narrative.</p>
+                            
+                            <h3 id="report-s1-2-title" class="text-2xl font-bold mt-8 mb-2">Section 1.2: The Blockchain Ledger - A Global, Immutable Public Record</h3>
+                            <p id="report-s1-2-p1">The technological backbone that enables Bitcoin's properties of decentralization and trustless verification is the blockchain. The blockchain is best understood as a specialized type of database—a public, distributed ledger that contains a record of every transaction ever conducted on the network. It is structured as a continuously growing chain of "blocks," where each block contains a batch of recent transactions.</p>
+                            <p id="report-s1-2-p2">The integrity and immutability of this ledger are secured through cryptography. Each new block is cryptographically linked to the one that came before it by including the previous block's "hash" in its own data. A hash is a unique, fixed-length string of characters generated from a piece of digital data. Even a minuscule change to the original data will result in a completely different hash. By chaining blocks together in this manner, the blockchain becomes effectively tamper-proof. To alter a transaction in a past block, an attacker would not only have to re-calculate the hash for that block but also for every single block that has been added to the chain since. The computational effort required to do so is so immense as to be practically impossible, thus ensuring the immutability of the transaction history.</p>
+                            <p id="report-s1-2-p3">This elegant structure is how Bitcoin solves the "double-spending" problem without a central authority. Double-spending is the risk in a digital cash system that the same digital unit could be spent more than once. In a traditional system, a bank prevents this by updating its central ledger. In Bitcoin, the public blockchain serves as a single, universally agreed-upon history of all transactions. When a new transaction is broadcast, the network collectively works to confirm it and add it to the next block. Once it is included in the chain and confirmed by subsequent blocks, it is considered final and irreversible.</p>
+                            <p id="report-s1-2-p4">The entire system operates on a principle of consensus. Thousands of nodes around the world voluntarily run the Bitcoin software, and each one maintains its own copy of the blockchain. When a new block is created, it is broadcast to all nodes, which independently verify that it follows the network's rules before adding it to their copy of the ledger. This distributed consensus mechanism ensures that all participants share the same version of the truth, securing the network's integrity without any need for a central coordinator.</p>
+                            
+                            <h3 id="report-s1-3-title" class="text-2xl font-bold mt-8 mb-2">Section 1.3: The Bitcoin Unit (BTC) - Properties of a New Asset Class</h3>
+                            <p id="report-s1-3-p1">The native asset of the Bitcoin network is the bitcoin, denoted as BTC. An "electronic coin" in the Bitcoin system is defined not as a discrete file but as a chain of digital signatures. Each owner transfers the coin to the next by digitally signing a hash of the previous transaction and the public key of the new owner. This chain of ownership is verifiable by anyone on the network. When analyzed as a financial asset, BTC exhibits several key properties that are of critical interest to institutional investors.</p>
+                            <p id="report-s1-3-p2">First, it possesses the fundamental characteristics of a monetary good:</p>
+                            <ul id="report-s1-3-ul1" class="list-disc pl-8 space-y-2">
+                                <li id="report-s1-3-li1"><b>Divisibility:</b> A single bitcoin can be divided into 100 million smaller units, known as "satoshis" or "sats". This high degree of divisibility allows for transactions of virtually any size, from micropayments to large institutional settlements.</li>
+                                <li id="report-s1-3-li2"><b>Portability:</b> As a purely digital asset, BTC can be transferred across the globe in minutes, without the physical constraints or logistical costs associated with moving physical assets like gold.</li>
+                                <li id="report-s1-3-li3"><b>Durability:</b> Bitcoin exists as records on the blockchain and cannot be destroyed or degraded over time.</li>
+                                <li id="report-s1-3-li4"><b>Scarcity:</b> As previously noted, the supply of BTC is algorithmically capped at 21 million coins, making it a finite resource. This programmed scarcity is a core element of its investment thesis as a potential hedge against the inflationary pressures inherent in fiat currency systems.</li>
+                            </ul>
+                            <p id="report-s1-3-p3">However, one property—fungibility—requires a more nuanced examination. Fungibility is the quality of an asset where each individual unit is interchangeable with any other unit of the same asset. For example, one troy ounce of pure gold is identical in value to any other, and one Euro is identical to any other Euro. Theoretically, one bitcoin should be identical to any other bitcoin.</p>
+                            <p id="report-s1-3-p4">The practical challenge to Bitcoin's fungibility arises directly from one of its core features: the transparent and permanent nature of the blockchain ledger. Because every transaction is publicly recorded, the entire history of any given bitcoin can be traced. This traceability allows for the possibility of "taint". Coins that have been involved in illicit activities, such as hacks, ransomware payments, or darknet market transactions, can be identified by blockchain analysis firms. Regulated financial institutions, such as cryptocurrency exchanges, may be required by anti-money laundering (AML) regulations to block or refuse deposits of these "tainted" coins.</p>
+                            <p id="report-s1-3-p5">This creates a situation where, in practice, not all bitcoins are treated as equal. A bitcoin with a "clean" history, with no links to illicit activity, may be considered more desirable or less risky than a tainted one. This presents a non-trivial operational and reputational risk for institutional players. An investment fund or corporate treasury receiving BTC must have a high degree of confidence in the provenance of the assets to avoid regulatory complications or the inability to liquidate their holdings. This practical limitation on fungibility is a key differentiator from physical gold or cash and has significant implications. It suggests the potential emergence of a premium market for "virgin" bitcoins—newly created coins from the block reward that have no prior transaction history. Such coins, sourced directly from reputable mining operations, would offer a guarantee of being untainted, making them a potentially more valuable asset for risk-averse institutional buyers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span id="report-part2-title">Part II: The Industrial Process of a Digital Commodity - A Deep Dive into Bitcoin Mining</span>
+                        <span class="accordion-arrow text-2xl">&rarr;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <button class="summarize-btn mt-4 mb-2 bg-indigo-500 text-white font-bold py-1 px-3 rounded-md hover:bg-indigo-600 transition text-sm" data-section="2">✨ Summarize Section</button>
+                        <div class="prose max-w-none py-4 text-lg" data-content-id="report-section-2">
+                            <h3 id="report-s2-1-title" class="text-2xl font-bold mt-4 mb-2">Section 2.1: What is Bitcoin Mining? The Engine of the Network</h3>
+                            <p id="report-s2-1-p1">Bitcoin mining is the industrial process that underpins the entire Bitcoin network. It is the mechanism by which transactions are verified and confirmed, the network is secured against attack, and new bitcoins are created and introduced into circulation. Far from being a niche hobby, modern Bitcoin mining is a capital-intensive, global industry that functions as the productive engine of this new digital economy.</p>
+                            <p id="report-s2-1-p2">In essence, mining is a decentralized record-keeping service performed by a vast, competitive network of specialized computer operators known as "miners". These miners perform three critical functions that, in the traditional financial world, are handled by large, centralized institutions:</p>
+                            <ol id="report-s2-1-ol1" class="list-decimal pl-8 space-y-2">
+                                <li id="report-s2-1-li1"><b>Transaction Validation and Clearing:</b> Miners gather pending transactions, verify their legitimacy (e.g., ensuring the sender has sufficient funds), and bundle them into new blocks to be added to the blockchain. This is analogous to the role of payment processors like Visa or clearing houses in the banking system.</li>
+                                <li id="report-s2-1-li2"><b>Network Security:</b> The immense computational effort expended by miners secures the blockchain's history, making it immutable and preventing fraudulent activities like double-spending. This security function is the core of the network's integrity.</li>
+                                <li id="report-s2-1-li3"><b>Currency Issuance:</b> By successfully performing their work, miners are rewarded with newly created bitcoins, serving as the sole mechanism for introducing new supply into the system. This is analogous to the role of a central bank or a mint, which controls the creation of new currency.</li>
+                            </ol>
+                            <p id="report-s2-1-p3">The term "mining" is a deliberate metaphor. Just as gold miners expend real-world resources—capital, energy, and labor—to extract a scarce physical commodity from the earth, Bitcoin miners expend real-world resources—capital for hardware and operational costs for electricity—to produce a scarce digital commodity. This expenditure of tangible resources is what gives Bitcoin its fundamental connection to the physical world and what anchors its digital value in real-world economic activity.</p>
+                            <p id="report-s2-1-p4">It is crucial to reframe the concept of mining away from a purely computational task and towards an economic and industrial one. The common phrase "solving a complex puzzle" can be misleading, as it implies an act of intellectual discovery. In reality, Bitcoin mining is a brute-force, energy-intensive lottery. The "puzzle" is not solved through cleverness but through sheer computational power. The winner is simply the participant who can afford to purchase the most "lottery tickets" (in the form of cryptographic guesses, or "hashes") per second. This distinction is paramount: for an energy company, it means energy is the primary, non-negotiable input. For a financial investor, it means Bitcoin mining is a capital-intensive industrial business, not a software company.</p>
+                            
+                            <h3 id="report-s2-2-title" class="text-2xl font-bold mt-8 mb-2">Section 2.2: The Mechanism of Proof-of-Work (PoW)</h3>
+                            <p id="report-s2-2-p1">The consensus mechanism that governs Bitcoin mining is called Proof-of-Work (PoW). The name itself is descriptive: miners must provide *proof* that they have expended a significant amount of computational *work*. This work is what earns them the right to add the next block to the blockchain.</p>
+                            <p id="report-s2-2-p2">The process unfolds as follows:</p>
+                            <ol id="report-s2-2-ol1" class="list-decimal pl-8 space-y-2">
+                                <li id="report-s2-2-li1"><b>Block Assembly:</b> Miners collect a set of unconfirmed transactions from the network's waiting area (the "mempool"). They assemble these transactions into a candidate block. This block also includes a "header," which contains important metadata, most critically the hash of the previous block in the chain, thereby linking them together.</li>
+                                <li id="report-s2-2-li2"><b>The Hashing "Work":</b> The core of the work involves finding a specific type of hash. The miner takes the data from their candidate block header and adds a random number called a "nonce" (number used once). This combined data is then fed through the SHA-256 cryptographic hashing algorithm. The algorithm produces a unique 64-character hexadecimal hash.</li>
+                                <li id="report-s2-2-li3"><b>The "Puzzle" to Solve:</b> The objective is not to solve a complex equation in the traditional sense, but to be the first to find a nonce that, when combined with the block data, produces a hash that meets a specific condition set by the network. This condition is that the resulting hash must be numerically less than or equal to a value known as the "target hash". In practice, this means the resulting hash must begin with a certain number of zeros.</li>
+                                <li id="report-s2-2-li4"><b>A Brute-Force Lottery:</b> Because the output of the SHA-256 algorithm is unpredictable, there is no shortcut to finding a valid hash. Miners must simply guess nonces over and over again—a process of brute-force trial and error. A modern ASIC mining machine can perform trillions of these guesses, or hashes, every second. The first miner to stumble upon a nonce that yields a valid hash wins the right to broadcast their block to the network.</li>
+                            </ol>
+                            <p id="report-s2-2-p3">The expenditure of electricity to power these trillions of calculations is the "proof" that work was done. It is a costly signal that is easy for the rest of the network to verify (it only takes one hash computation to check if a solution is valid) but extremely difficult and expensive to produce. This asymmetry is what secures the network. To rewrite the blockchain's history, an attacker would have to re-expend all the energy that the entire network has already spent, making such an attack economically infeasible.</p>
+                            <p id="report-s2-2-p4">A critical feature of this system is the <b>Difficulty Adjustment</b>. The Bitcoin protocol is designed to produce one new block, on average, every 10 minutes. To maintain this steady rhythm, the difficulty of the mining puzzle automatically adjusts every 2,016 blocks (approximately two weeks). If miners are finding blocks faster than 10 minutes (because more computational power has joined the network), the difficulty increases, meaning more leading zeros are required in the hash, making it harder to find. Conversely, if blocks are being found too slowly, the difficulty decreases. This mechanism acts as the network's thermostat, ensuring a predictable and stable issuance rate regardless of how many miners are competing or how powerful their hardware becomes. This feedback loop is the very core of Bitcoin's economic model, creating a direct and dynamic link between the asset's price, the number of miners, the network's security level, and its total energy consumption.</p>
+                            
+                            <h3 id="report-s2-3-title" class="text-2xl font-bold mt-8 mb-2">Section 2.3: The Economics of Issuance - Block Rewards and Fees</h3>
+                            <p id="report-s2-3-p1">A fundamental question for any institutional analysis is understanding how a new asset is created and distributed. In the Bitcoin system, new coins are not issued by a central authority or a corporate entity. Instead, they are created directly by the protocol as a built-in reward for the miners who perform the Proof-of-Work.</p>
+                            <p id="report-s2-3-p2">The mechanism for this issuance is a special transaction called the "coinbase transaction," which is the very first transaction recorded in every new block. This transaction has no input and creates brand-new bitcoins out of thin air, assigning them to the digital wallet address of the miner who successfully found the valid hash for that block. This reward structure serves two primary purposes: it incentivizes participants to contribute their computational resources to secure the network, and it provides a fair and decentralized method for the initial distribution of bitcoins into the ecosystem.</p>
+                            <p id="report-s2-3-p3">The miner's revenue is composed of two components:</p>
+                            <ol id="report-s2-3-ol1" class="list-decimal pl-8 space-y-2">
+                                <li id="report-s2-3-li1"><b>The Block Subsidy:</b> This is the fixed number of new bitcoins created in each block. This subsidy is the primary economic incentive for mining today. The amount of the subsidy is not arbitrary; it is programmed to decrease over time through an event known as the "halving." When Bitcoin was launched in 2009, the subsidy was 50 BTC per block. Approximately every four years (or every 210,000 blocks), this reward is cut in half.
+                                    <ul id="report-s2-3-ul1" class="list-disc pl-8 mt-2">
+                                        <li>2012 Halving: Reward reduced to 25 BTC.</li>
+                                        <li>2016 Halving: Reward reduced to 12.5 BTC.</li>
+                                        <li>2020 Halving: Reward reduced to 6.25 BTC.</li>
+                                        <li>April 2024 Halving: Reward reduced to 3.125 BTC.</li>
+                                    </ul>
+                                    <p class="mt-2" id="report-s2-3-p4">This programmatic and unchangeable reduction in the rate of new supply is a cornerstone of Bitcoin's economic model. It ensures the asset's increasing scarcity over time, underpinning its narrative as "digital gold" and a deflationary store of value. This process will continue until the block subsidy becomes infinitesimally small and the total supply approaches its 21 million coin limit, which is projected to occur around the year 2140.</p>
+                                </li>
+                                <li id="report-s2-3-li2"><b>Transaction Fees:</b> In addition to the block subsidy, miners also collect all the transaction fees paid by users whose transactions are included in their block. Users can voluntarily include a fee with their transaction to incentivize miners to prioritize its inclusion in the next block. As the block subsidy continues to decrease with each future halving, transaction fees are designed to become the primary, and eventually sole, source of revenue for miners. This ensures that there will always be an economic incentive for miners to continue securing the network, even after the last new bitcoin has been issued, guaranteeing the long-term viability and security of the system.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span id="report-part3-title">Part III: The Nexus of Physical, Digital, and Financial Worlds</span>
+                        <span class="accordion-arrow text-2xl">&rarr;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <button class="summarize-btn mt-4 mb-2 bg-indigo-500 text-white font-bold py-1 px-3 rounded-md hover:bg-indigo-600 transition text-sm" data-section="3">✨ Summarize Section</button>
+                        <div class="prose max-w-none py-4 text-lg" data-content-id="report-section-3">
+                            <p id="report-part3-p1">The Bitcoin mining process represents a unique value chain that directly converts a physical, local resource—energy—into a digital, computational process, which in turn creates a globally liquid financial asset. Understanding this three-layered nexus is critical for assessing the opportunities and risks associated with the industry.</p>
+                            
+                            <h3 id="report-s3-1-title" class="text-2xl font-bold mt-4 mb-2">Section 3.1: The Energy Layer (Physical/Local) - Tailored for TEPCO</h3>
+                            <p id="report-s3-1-p1">From the perspective of an energy producer and grid operator, Bitcoin mining is a new and powerful force in global energy markets. Its characteristics are unlike any other industrial load, presenting both challenges and unprecedented opportunities for the modernization of energy infrastructure.</p>
+                            
+                            <h4 id="report-s3-1-1-title" class="text-xl font-bold mt-4 mb-2">3.1.1: A Global Baseload Consumer</h4>
+                            <p id="report-s3-1-1-p1">The scale of the Bitcoin network's energy consumption is substantial. As of early 2025, credible estimates place the network's total annual electricity demand in the range of 168 to 175 terawatt-hours (TWh). To put this figure in perspective, it is comparable to the annual electricity consumption of entire mid-sized industrial nations such as Poland, Argentina, or Ukraine. This immense demand is a direct consequence of the Proof-of-Work mechanism, which incentivizes a global, competitive "arms race" where miners continuously add more computational power (and thus consume more energy) to compete for block rewards. This makes the Bitcoin network one of the largest and most consistent single consumers of electricity on the planet.</p>
+                            
+                            <h4 id="report-s3-1-2-title" class="text-xl font-bold mt-4 mb-2">3.1.2: The Grid as a Partner - From Parasitic Load to Symbiotic Asset</h4>
+                            <p id="report-s3-1-2-p1">Historically, such a large and rapidly growing energy demand might be viewed as a purely parasitic load, straining grid infrastructure and increasing costs for other consumers. However, the operational nature of Bitcoin mining is fundamentally different from traditional industrial loads, allowing it to function as a symbiotic partner to the grid.</p>
+                            <p id="report-s3-1-2-p2">The key attribute is that Bitcoin mining is a <b>highly flexible and easily interruptible load</b>. A mining facility is essentially a data center that can be powered down or ramped up in a matter of minutes or even seconds with no significant operational cost or damage to equipment. This makes miners ideal participants in <b>demand response</b> programs. They can act as a "shock absorber" or a "virtual battery" for the grid, rapidly curtailing their power consumption during periods of peak demand or grid stress, thereby freeing up capacity for critical residential and commercial use.</p>
+                            <p id="report-s3-1-2-p3">A prime case study is the role of miners in the Texas ERCOT grid. During the severe weather of Winter Storm Elliott in December 2022, Bitcoin miners in the state collectively curtailed over 1.5 gigawatts (GW) of power demand, an action that was instrumental in helping to stabilize the grid and prevent widespread blackouts. Miners in Texas and other regions are increasingly being integrated into grid management programs, where they are compensated by the utility not for consuming power, but for their ability to <i>not</i> consume it on demand, transforming them from a simple customer into a valuable grid-stabilizing service provider.</p>
+                            
+                            <h4 id="report-s3-1-3-title" class="text-xl font-bold mt-4 mb-2">3.1.3: Monetizing Stranded and Curtailed Energy</h4>
+                            <p id="report-s3-1-3-p1">Another unique characteristic of Bitcoin mining is that it is <b>location-agnostic</b>. A mining operation can be established anywhere in the world that has a power source and an internet connection. This mobility allows miners to act as a "buyer of last resort" for two categories of otherwise wasted energy:</p>
+                            <ul id="report-s3-1-3-ul1" class="list-disc pl-8 space-y-2">
+                                <li id="report-s3-1-3-li1"><b>Stranded Energy:</b> This refers to power generated in remote locations that lack the transmission infrastructure to deliver it to population centers. A remote hydroelectric dam or geothermal vent may have immense energy potential but no customers. A Bitcoin miner can co-locate at the source, converting that stranded energy directly into a globally traded digital commodity, effectively exporting the energy value without needing power lines. A real-world example is in Paraguay, where miners have partnered with the national power authority to absorb surplus hydropower from the massive Itaipu Dam that cannot be exported due to transmission bottlenecks.</li>
+                                <li id="report-s3-1-3-li2"><b>Curtailed Energy:</b> This is energy, particularly from intermittent renewable sources like wind and solar, that is produced at times when grid demand is low and cannot be stored. Grid operators are often forced to "curtail" this energy, essentially wasting it. Bitcoin miners provide a perfect solution by absorbing this excess, off-peak power. In West Texas, a region with vast wind power generation, miners consumed an estimated 1.3 TWh of curtailed wind energy in 2022, providing $60 million in revenue to wind farm operators for power that would have otherwise been lost.</li>
+                            </ul>
+                            <p id="report-s3-1-3-p2">This ability to monetize otherwise valueless energy transforms the economic equation for energy producers and is a foundational element of the symbiotic relationship between mining and the energy sector.</p>
+                            
+                            <h4 id="report-s3-1-4-title" class="text-xl font-bold mt-4 mb-2">3.1.4: Accelerating the Renewable Transition</h4>
+                            <p id="report-s3-1-4-p1">The characteristics described above position Bitcoin mining as a powerful catalyst for the global transition to renewable energy. By providing a consistent and flexible buyer for intermittent power sources, mining can significantly improve the profitability and financial viability of new wind and solar projects, thereby de-risking investment in their development.</p>
+                            <p id="report-s3-1-4-p2">The industry's energy mix reflects this trend. Data from 2025 indicates a significant shift towards sustainability. Over 52% of the Bitcoin network's electricity is now sourced from sustainable power, a notable increase from previous years. This shift is not just a matter of public relations; it is driven by hard economics. Miners are relentlessly seeking the cheapest possible power, and in many parts of the world, new renewable energy is the lowest-cost option.</p>
+                            <p id="report-s3-1-4-p3">Furthermore, the industry is pioneering innovative environmental strategies. One of the most promising is <b>flared gas mitigation</b>. In oil and gas extraction, associated natural gas is often flared (burned off) at the wellhead, releasing CO2 and wasting the energy. Mining companies are now deploying mobile data centers to these oil fields, capturing the flared gas to generate electricity on-site to power their rigs. This practice not only provides them with extremely low-cost power but also reduces methane emissions by up to 63% compared to flaring, turning an environmental liability into an economic and ecological asset. Similarly, the significant waste heat generated by mining hardware is being increasingly repurposed for applications like district heating for municipalities, warming greenhouses for agriculture, and heating commercial swimming pools, creating an additional value stream from a byproduct.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span id="report-part4-title">Part IV: Strategic Outlook and Recommendations</span>
+                        <span class="accordion-arrow text-2xl">&rarr;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <button class="summarize-btn mt-4 mb-2 bg-indigo-500 text-white font-bold py-1 px-3 rounded-md hover:bg-indigo-600 transition text-sm" data-section="4">✨ Summarize Section</button>
+                        <div class="prose max-w-none py-4 text-lg" data-content-id="report-section-4">
+                            <p id="report-part4-p1">The synthesis of the physical, digital, and financial layers of the Bitcoin value chain reveals a set of distinct strategic opportunities and risks for both the energy and finance sectors. The following recommendations are tailored to provide actionable pathways for TEPCO management and AEX investors to navigate this emerging landscape.</p>
+                            
+                            <h3 id="report-s4-1-title" class="text-2xl font-bold mt-4 mb-2">Section 4.1: For the Energy Sector (TEPCO)</h3>
+                            <p id="report-s4-1-p1">For a major utility like Tokyo Electric Power Company, Bitcoin mining should be viewed not as a threat, but as a new class of industrial electricity consumer with unique and valuable properties. Engaging with this industry offers avenues to enhance grid stability, accelerate renewable energy deployment, and create novel revenue streams.</p>
+                            <ul id="report-s4-1-ul1" class="list-disc pl-8 space-y-2">
+                                <li id="report-s4-1-li1"><b>Opportunity Assessment:</b> The Bitcoin network represents a large, geographically flexible, and rapidly growing source of electricity demand. Unlike traditional industrial consumers, its load is perfectly interruptible, making it a powerful tool for modern grid management.</li>
+                                <li id="report-s4-1-li2"><b>Recommendation 1 - Develop Strategic Partnership Models:</b> Proactively seek partnerships with reputable, large-scale mining operations. The most direct approach is through long-term <b>Power Purchase Agreements (PPAs)</b>. By offering a fixed, predictable electricity price, TEPCO can become an attractive partner for miners. In return, the miner acts as an anchor tenant for new power generation projects, particularly renewables. A PPA with a miner can provide the guaranteed revenue stream needed to secure financing and de-risk the development of new solar, wind, or geothermal facilities, thereby accelerating TEPCO's own green energy transition goals.</li>
+                                <li id="report-s4-1-li3"><b>Recommendation 2 - Monetize Grid Services:</b> Leverage the unique flexibility of mining loads by designing and offering specialized grid-balancing services. This can include <b>interruptible load contracts</b> or formal <b>demand response programs</b> where TEPCO pays miners a fee to curtail their energy consumption during periods of peak grid demand. This turns a passive customer into an active grid-stabilizing asset, enhancing overall system resilience and providing a new, high-margin revenue stream for the utility. This is particularly valuable in grids with a high penetration of intermittent renewables.</li>
+                                <li id="report-s4-1-li4"><b>Recommendation 3 - Explore Direct Investment and Joint Ventures:</b> For a more vertically integrated approach, TEPCO should consider direct investment in or joint ventures with mining facilities, specifically targeting the monetization of underutilized energy assets. This could involve deploying mining data centers at the site of stranded power sources (e.g., remote geothermal or hydropower) or co-locating them with renewable farms to absorb curtailed energy. This strategy transforms a non-performing or wasted energy asset directly into a liquid digital commodity (BTC), which can then be sold on global markets, creating a profit center from what was previously a cost or a missed opportunity.</li>
+                                <li id="report-s4-1-li5"><b>Recommendation 4 - Lead on ESG and Policy:</b> The primary criticism of Bitcoin mining is its energy consumption. TEPCO can take a leadership role by proactively engaging with regulators and the public to reframe this narrative. By championing mining operations powered by clean energy and developing transparent, verifiable reporting standards for the energy sources used, TEPCO can position itself as a facilitator of "green Bitcoin." This approach not only counters negative ESG narratives but also aligns the company with climate goals and responsible innovation, potentially creating a premium market for sustainably mined assets.</li>
+                            </ul>
+                            
+                            <h3 id="report-s4-2-title" class="text-2xl font-bold mt-8 mb-2">Section 4.2: For the Financial Sector (AEX Investors)</h3>
+                            <p id="report-s4-2-p1">For sophisticated investors on the Amsterdam Exchange, the Bitcoin mining sector offers a compelling, albeit complex, investment opportunity. Publicly traded mining stocks provide a form of leveraged exposure to the price of Bitcoin, but their performance is subject to significant operational variables that require careful due diligence.</p>
+                            <ul id="report-s4-2-ul1" class="list-disc pl-8 space-y-2">
+                                <li id="report-s4-2-li1"><b>Investment Thesis:</b> An investment in a Bitcoin mining company is not a direct investment in Bitcoin. It is an investment in an industrial commodity producer whose primary output is Bitcoin. As such, these stocks offer the potential for amplified returns during a Bitcoin bull market but also carry amplified risks related to operational execution and capital management. They are best analyzed as a hybrid of a commodity producer (like an oil driller or gold miner) and a technology infrastructure company.</li>
+                                <li id="report-s4-2-li2"><b>Valuation Framework:</b> A robust valuation of a mining company must go beyond simply tracking the price of Bitcoin and should include a rigorous analysis of the following four pillars:
+                                    <ol class="list-decimal pl-8 mt-2">
+                                        <li id="report-s4-2-li2-1"><b>Operational Efficiency:</b> The core of a miner's competitiveness lies in its hardware. Investors must analyze the company's fleet of ASIC miners, focusing on the average <b>energy efficiency (J/TH)</b>. A fleet of newer, more efficient machines will have lower operating costs and be more resilient to downturns in the Bitcoin price or increases in network difficulty. Hashrate growth projections are also a key indicator of future revenue potential.</li>
+                                        <li id="report-s4-2-li2-2"><b>Energy Strategy:</b> Electricity is the single largest operational cost. Therefore, a miner's energy strategy is a critical point of differentiation. Investors should scrutinize power costs, seeking companies with long-term, fixed-price PPAs that protect them from volatile spot energy markets. A company with a low, predictable cost of power has a significant and durable competitive advantage.</li>
+                                        <li id="report-s4-2-li2-3"><b>Financial Management and Risk Hedging:</b> The balance sheet is paramount. High levels of debt can be fatal during a market downturn. Furthermore, investors should assess the sophistication of the company's risk management. Does the management team actively use derivatives to hedge against Bitcoin price volatility and lock in future revenues? A proactive hedging strategy indicates a mature and resilient operator, whereas a purely unhedged strategy is a high-risk bet on the price of Bitcoin.</li>
+                                        <li id="report-s4-2-li2-4"><b>Treasury Strategy:</b> Investors must understand how the company manages its mined bitcoins. Does it sell its BTC immediately to cover operational costs and lock in profits? Or does it follow a "HODL" strategy, holding the mined BTC on its balance sheet as a strategic asset? The latter approach offers greater potential upside in a rising market but also exposes the company's equity to the full volatility of the Bitcoin price.</li>
+                                    </ol>
+                                </li>
+                                <li id="report-s4-2-li3"><b>Long-Term Outlook:</b> The ongoing integration of Bitcoin into the mainstream global financial system, driven by institutional adoption and products like ETFs, provides a powerful long-term tailwind for the entire ecosystem. The mining industry is the foundational productive layer of this emerging asset class. As the value and adoption of Bitcoin grow, the strategic importance and potential profitability of the infrastructure that produces and secures it are likely to increase in tandem. However, investors must remain acutely aware of the sector's inherent risks, including the extreme price volatility of Bitcoin and the predictable but impactful supply shocks caused by the quadrennial halving cycle. Success in this sector will require a deep understanding of both the digital asset itself and the complex industrial and financial machinery that brings it into existence.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p id="footer-text" class="text-sm text-gray-500">This infographic is for informational purposes only. Data is synthesized from the Bitcoin whitepaper, academic reports, and industry analyses as of Q2 2025. All investments carry risk.</p>
+        </footer>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="summary-modal-title" class="text-2xl font-bold mb-4">AI-Powered Summary</h2>
+            <div id="summary-modal-body" class="text-lg"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- TRANSLATION DATA & LOGIC ---
+            const translations = {
+                en: {}, // English originals will be stored here
+                ja: {
+                    'main-title': 'ビットコイン：エネルギーから資産へ',
+                    'main-subtitle': 'エネルギーおよび金融業界のリーダー向け機関投資家概要',
+                    'intro-title': 'ビットコインとは？デジタルコモディティ',
+                    'intro-p1': 'ビットコインは分散型のデジタル通貨であり、中央銀行や単一の管理者が存在しない「Peer-to-Peer電子キャッシュシステム」です。信頼の代わりに暗号学的証明を用いて、二者が直接取引することを可能にします。',
+                    'intro-p2': '「<span class="font-bold" style="color: #2CA58D;">デジタルゴールド</span>」と考えてください。希少性、耐久性、分割可能性を備えていますが、透明で完全に予測可能な供給スケジュールを持つ、ユニークな資産クラスです。',
+                    'kpi-supply': '変更不可能で絶対的なビットコインの最大供給量。',
+                    'comparison-title': '資産特性：比較分析',
+                    'th-feature': '特性',
+                    'td-issuer': '発行者',
+                    'td-issuer-btc': '分散型プロトコル',
+                    'td-issuer-gold': 'なし（天然）',
+                    'td-issuer-fiat': '中央銀行',
+                    'td-issuer-aex': '企業',
+                    'td-supply': '供給ダイナミクス',
+                    'td-supply-btc': '絶対的希少性（2100万上限）',
+                    'td-supply-gold': '相対的希少性',
+                    'td-supply-fiat': '弾力的（無制限）',
+                    'td-supply-aex': '弾力的',
+                    'td-decentralization': '分散化',
+                    'td-decentralization-btc': '高',
+                    'td-decentralization-gold': '高（所有権）',
+                    'td-decentralization-fiat': '中央集権的',
+                    'td-decentralization-aex': '中央集権的',
+                    'td-verification': '検証',
+                    'td-verification-btc': '暗号学的証明',
+                    'td-verification-gold': '物理的分析',
+                    'td-verification-fiat': '発行者への信頼',
+                    'td-verification-aex': '監査人への信頼',
+                    'mining-title': 'エンジンルーム：ビットコインマイニングとは？',
+                    'mining-p1': 'マイニングは、ネットワークを保護し、新しいコインを発行する産業プロセスです。エネルギーをデジタル価値に変換する3つの重要な機能を持つ分散型記録管理サービスです。',
+                    'flow-1-title': '1. 取引検証',
+                    'flow-1-p': 'マイナーは取引を検証し、新しいブロックにまとめます。',
+                    'flow-2-title': '2. ネットワークセキュリティ',
+                    'flow-2-p': '膨大な計算作業（プルーフ・オブ・ワーク）により、ブロックチェーンの履歴は不変になります。',
+                    'flow-3-title': '3. 通貨発行',
+                    'flow-3-p': '成功したマイナーは、新しく作成されたビットコインで報酬を受け取ります。',
+                    'mechanism-title': 'メカニズム：マイニングが価値を生み出す仕組み',
+                    'halving-title': '「半減期」：プログラムされた希少性',
+                    'halving-p1': 'ブロックをマイニングする報酬は、約4年ごとに半分になります。この「半減期」というイベントは、予測可能で減少する新規供給率を保証し、ビットコインのデフレ的性質を支えています。',
+                    'halving-2012-t': '2012年 半減期',
+                    'halving-2012-p': '報酬が25 BTCに減少',
+                    'halving-2016-t': '2016年 半減期',
+                    'halving-2016-p': '報酬が12.5 BTCに減少',
+                    'halving-2020-t': '2020年 半減期',
+                    'halving-2020-p': '報酬が6.25 BTCに減少',
+                    'halving-2024-t': '2024年 半減期',
+                    'halving-2024-p': '報酬が3.125 BTCに減少',
+                    'revenue-title': 'マイナーの収益構成',
+                    'revenue-p1': 'マイナーの収入は、ブロック補助金（新しいコイン）と取引手数料の2つの源泉からなります。時間が経つにつれて補助金が減少するため、手数料がネットワークを保護する主要なインセンティブになるように設計されています。',
+                    'value-chain-title': 'バリューチェーン：3層のネクサス',
+                    'layer-a-title': 'A) エネルギー：物理層',
+                    'layer-a-p1': 'ビットコインマイニングはユニークな産業負荷です。大規模で、場所に依存せず、完全に中断可能であり、現代の電力網にとって強力なパートナーとなります。',
+                    'kpi-grid': 'エリオット冬の嵐の際、テキサスのマイナーが送電網を安定させるために抑制した電力。',
+                    'kpi-methane': 'フレアガスを燃焼させる代わりにマイニングに使用することによるメタン排出削減率。',
+                    'layer-b-title': 'B) コンピューティング：デジタル層',
+                    'layer-b-p1': '計算効率を求める絶え間ない「軍拡競争」が業界を牽引しています。マイナーは特定用途向け集積回路（ASIC）を使用して、毎秒何兆もの計算を実行します。',
+                    'layer-b-p2': '効率（J/TH）が低いほど優れており、計算あたりのエネルギー消費が少ないことを意味します。これが収益性と技術進歩を促進します。',
+                    'layer-c-title': 'C) 金融：グローバル層',
+                    'layer-c-p1': 'エネルギーを燃料とする計算作業は、世界的に流動性のある金融資産を生み出します。この市場の成熟には、公開企業や規制された投資商品が含まれます。',
+                    'kpi-etf-value': '現物ETF',
+                    'kpi-etf-label': '主要市場での現物ビットコインETFの承認は、主流の機関投資家資本のための規制された参入路を提供しました。',
+                    'outlook-title': '戦略的展望と提言',
+                    'outlook-tepco-title': 'エネルギーセクター向け（東京電力）',
+                    'outlook-tepco-1': '<span class="font-bold">パートナーシップの構築：</span>マイナーとの電力購入契約（PPA）を利用して、新しい再生可能エネルギープロジェクトのリスクを軽減し、資金を調達する。',
+                    'outlook-tepco-2': '<span class="font-bold">グリッドサービスの収益化：</span>マイナーが電力を抑制するためにお金を受け取る需要応答プログラムを提供し、グリッドの安定性を高め、新たな収益を生み出す。',
+                    'outlook-tepco-3': '<span class="font-bold">遊休資産の活用：</span>遠隔地や抑制されたエネルギー源にマイニング事業を展開し、無駄な電力を世界的な商品に変換する。',
+                    'outlook-aex-title': '金融セクター向け（AEX投資家）',
+                    'outlook-aex-1': '<span class="font-bold">運用効率の分析：</span>マイナーのハードウェア効率（J/TH）を精査する。低いほど優れており、回復力がある。',
+                    'outlook-aex-2': '<span class="font-bold">エネルギー戦略の評価：</span>耐久性のある競争優位性のために、低コストで固定価格の電力契約を持つ企業を優先する。',
+                    'outlook-aex-3': '<span class="font-bold">財務管理の評価：</span>変動性を管理するために、慎重な負債水準と洗練されたヘッジ戦略を探す。',
+                    'gemini-title': '✨ 戦略的シナリオモデラー',
+                    'gemini-p1': '潜在的な未来のシナリオとその戦略的影響を探ります。以下の市場イベントを仮定して入力し、AIモデルにエネルギーまたは金融セクター向けのカスタマイズされた分析を生成させます。',
+                    'scenario-label': '市場シナリオを入力してください：',
+                    'btn-tepco-text': 'TEPCO向けに分析',
+                    'btn-aex-text': 'AEX投資家向けに分析',
+                    'analysis-title': '生成された分析：',
+                    'analysis-placeholder': 'AIが生成した戦略的分析がここに表示されます...',
+                    'full-report-title': '詳細レポート全文',
+                    'report-part1-title': 'パートI：機関投資家向けビットコインの基礎',
+                    'report-part2-title': 'パートII：デジタル商品の産業プロセス - ビットコインマイニングの詳細',
+                    'report-part3-title': 'パートIII：物理、デジタル、金融世界のネクサス',
+                    'report-part4-title': 'パートIV：戦略的展望と提言',
+                    'footer-text': 'このインフォグラフィックは情報提供のみを目的としています。データはビットコインのホワイトペーパー、学術報告書、および2025年第2四半期時点の業界分析から統合されています。すべての投資にはリスクが伴います。',
+                    'summary-modal-title': 'AIによる要約',
+                    // Note: Report content is not translated here for brevity, but could be added following the same pattern.
+                }
+            };
+
+            // Store original English text from the DOM
+            function storeOriginals() {
+                for (const key in translations.ja) {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        translations.en[key] = element.innerHTML;
+                    }
+                }
+            }
+
+            // Function to switch language
+            function switchLanguage(lang) {
+                document.documentElement.lang = lang; // Update html lang attribute
+                for (const key in translations[lang]) {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            }
+
+            // --- INITIALIZATION ---
+            storeOriginals(); // Store English text on load
+
+            const langSwitcher = document.getElementById('language-switcher');
+            langSwitcher.addEventListener('change', (event) => {
+                switchLanguage(event.target.value);
+            });
+
+            // Accordion functionality
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                header.addEventListener('click', () => {
+                    const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                    // Close all accordions
+                    accordionItems.forEach(i => {
+                        i.querySelector('.accordion-content').style.maxHeight = '0px';
+                        i.querySelector('.accordion-content').classList.remove('open');
+                        i.querySelector('.accordion-header').classList.remove('open');
+                    });
+                    // Open the clicked one if it was closed
+                    if (!isOpen) {
+                        content.classList.add('open');
+                        header.classList.add('open');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Gemini API functionality
+            const summaryModal = document.getElementById('summary-modal');
+            const summaryModalBody = document.getElementById('summary-modal-body');
+            const closeModalButton = document.querySelector('.close-button');
+
+            document.querySelectorAll('.summarize-btn').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const sectionId = button.getAttribute('data-section');
+                    const contentElement = document.querySelector(`[data-content-id="report-section-${sectionId}"]`);
+                    const textToSummarize = contentElement.innerText;
+                    
+                    summaryModalBody.innerHTML = '<div class="loader mx-auto"></div>';
+                    summaryModal.style.display = 'block';
+
+                    try {
+                        let chatHistory = [{ role: "user", parts: [{ text: `Summarize(in "${langSwitcher.value}" language) the following text for a business executive in 3-4 key bullet points:\n\n${textToSummarize}` }] }];
+                        const payload = { contents: chatHistory };
+                        const apiKey = ""; // API key will be managed by the environment
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                        
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+                        
+                        if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
+                            const summaryText = result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                            summaryModalBody.innerHTML = summaryText;
+                        } else {
+                           summaryModalBody.textContent = 'Sorry, the summary could not be generated.';
+                        }
+                    } catch (error) {
+                        console.error('Error fetching summary:', error);
+                        summaryModalBody.textContent = 'An error occurred while generating the summary.';
+                    }
+                });
+            });
+
+            closeModalButton.onclick = () => summaryModal.style.display = 'none';
+            window.onclick = (event) => {
+                if (event.target == summaryModal) {
+                    summaryModal.style.display = 'none';
+                }
+            };
+
+            const scenarioInput = document.getElementById('scenario-input');
+            const analysisOutput = document.getElementById('analysis-output');
+            const generateTepcoBtn = document.getElementById('generate-tepco');
+            const generateAexBtn = document.getElementById('generate-aex');
+
+            async function generateAnalysis(targetAudience) {
+                const scenario = scenarioInput.value;
+                if (!scenario.trim()) {
+                    analysisOutput.textContent = 'Please enter a scenario first.';
+                    return;
+                }
+
+                const loader = document.getElementById(`loader-${targetAudience}`);
+                const btnText = document.getElementById(`btn-${targetAudience}-text`);
+                loader.classList.remove('hidden');
+                btnText.classList.add('hidden');
+                analysisOutput.innerHTML = '<div class="loader mx-auto"></div>';
+
+                const prompt = `You are a financial and energy sector analyst. Given the following market scenario: "${scenario}", provide a brief strategic analysis for ${targetAudience === 'tepco' ? 'TEPCO, a major energy utility in Tokyo' : 'Agile Energy X investors focused on technology and commodity producers'}. Focus on 2-3 key risks and opportunities in "${langSwitcher.value}" language.`;
+
+                try {
+                    let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                    const payload = { contents: chatHistory };
+                    const apiKey = "AIzaSyA9TXplSTrku_TYnuOQK96nJ3LKtvp3TdA"; // API key will be managed by the environment
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
+                        analysisOutput.innerHTML = result.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+                    } else {
+                        analysisOutput.textContent = 'Sorry, the analysis could not be generated.';
+                    }
+                } catch (error) {
+                    console.error('Error generating analysis:', error);
+                    analysisOutput.textContent = 'An error occurred while generating the analysis.';
+                } finally {
+                    loader.classList.add('hidden');
+                    btnText.classList.remove('hidden');
+                }
+            }
+            
+            generateTepcoBtn.addEventListener('click', () => generateAnalysis('tepco'));
+            generateAexBtn.addEventListener('click', () => generateAnalysis('aex'));
+            
+            // Chart setup
+            const brilliantBlues = {
+                primary: '#2CA58D',
+                secondary: '#5A9A78',
+                accent1: '#87CEEB',
+                accent2: '#4682B4',
+                dark: '#0A2342',
+                highlight: '#FFD700'
+            };
+
+            const chartTooltipOptions = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                return label.join(' ');
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            function wrapLabels(label, maxLength) {
+                if (label.length <= maxLength) return label;
+                const words = label.split(' ');
+                let currentLine = '';
+                const lines = [];
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            }
+
+            const revenueChart = new Chart(document.getElementById('revenueChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Block Subsidy (New BTC)', 'Transaction Fees'],
+                    datasets: [{
+                        label: 'Revenue Source',
+                        data: [97, 3],
+                        backgroundColor: [brilliantBlues.primary, brilliantBlues.accent1],
+                        borderColor: '#F0F8FF',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' }, tooltip: chartTooltipOptions.plugins.tooltip }
+                }
+            });
+
+            const energyMixChart = new Chart(document.getElementById('energyMixChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Natural Gas', 'Hydropower', 'Wind', 'Nuclear', 'Coal', 'Solar', 'Other'],
+                    datasets: [{
+                        label: '% of Network Energy',
+                        data: [38, 23, 15, 10, 9, 3, 2],
+                        backgroundColor: [brilliantBlues.accent2, brilliantBlues.primary, brilliantBlues.accent1, brilliantBlues.secondary, '#B0C4DE', brilliantBlues.highlight, '#D3D3D3'],
+                        borderColor: brilliantBlues.dark,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { x: { beginAtZero: true, title: { display: true, text: 'Percentage (%)' } } },
+                    plugins: { title: { display: true, text: '2025 Bitcoin Mining Energy Mix' }, legend: { display: false }, tooltip: chartTooltipOptions.plugins.tooltip }
+                }
+            });
+
+            const asicLabels = ['Antminer S23 Hyd.', 'Antminer S21 Pro', 'WhatsMiner M66S++', 'WhatsMiner M60S', 'Avalon A1566I'].map(l => wrapLabels(l, 16));
+            const asicChart = new Chart(document.getElementById('asicChart'), {
+                type: 'bar',
+                data: {
+                    labels: asicLabels,
+                    datasets: [{ label: 'Efficiency (J/TH)', data: [9.5, 15.1, 15.5, 19.1, 24.3], backgroundColor: brilliantBlues.primary }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Joules per Terahash (Lower is Better)' } } },
+                    plugins: { title: { display: true, text: 'ASIC Miner Efficiency Comparison' }, legend: { display: false }, tooltip: chartTooltipOptions.plugins.tooltip }
+                }
+            });
+
+            const marketCapChart = new Chart(document.getElementById('marketCapChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Total Crypto Market Cap (USD Trillions)',
+                        data: [2.2, 0.9, 1.7, 2.5, 4.0],
+                        borderColor: brilliantBlues.accent2,
+                        backgroundColor: 'rgba(70, 130, 180, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'Market Cap (Trillions USD)' } } },
+                    plugins: {
+                        title: { display: true, text: 'Crypto Market Growth' },
+                        legend: { display: false },
+                        tooltip: chartTooltipOptions.plugins.tooltip
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://arghabis3949.app.n8n.cloud/webhook/2f5977a9-a310-44a4-8011-1fbd05919e0f/chat'
+	});
+</script>
+</html>

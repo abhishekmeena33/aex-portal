@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitachi Green City: An Antifragile Carbon Circularity Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2.5rem;
+            line-height: 1;
+            color: #0a9396;
+            align-self: center;
+            transform: rotate(90deg);
+        }
+        @media (min-width: 768px) {
+            .flow-arrow {
+                transform: rotate(0deg);
+            }
+        }
+        .kpi-card {
+            background-color: #005f73;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #e9d8a6;
+        }
+        .kpi-label {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: #005f73;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: #0a9396;
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+            padding-left: 2.5rem;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            bottom: 0;
+            width: 2px;
+            background-color: #94d2bd;
+        }
+        .timeline-item:last-child:before {
+            display: none;
+        }
+        .timeline-marker {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: #0a9396;
+            border: 3px solid white;
+        }
+        .chem-formula {
+            font-family: monospace;
+            background-color: #e9d8a633;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e9d8a6;
+            text-align: center;
+            font-size: 1rem;
+            color: #ca6702;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#005f73] text-white p-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-black uppercase tracking-wide">Project Antifragile</h1>
+        <p class="mt-4 text-xl md:text-2xl font-light max-w-3xl mx-auto text-[#e9d8a6]">A Blueprint for a Circular Carbon Economy in Hitachi City</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="vision" class="my-12">
+            <h2 class="section-title">The Vision: An Antifragile Circularity Hub</h2>
+            <p class="section-subtitle">This project forges a groundbreaking partnership between AEX's digital infrastructure, Hongo Institute's biomass expertise, and Hitachi City's smart grid, creating a self-reinforcing ecosystem where digital waste becomes green industrial fuel.</p>
+            
+            <div class="content-card">
+                <h3 class="text-xl font-bold text-center mb-6 text-[#005f73]">The Core Synergy Loop</h3>
+                <div class="flex flex-col md:flex-row justify-around items-center gap-4">
+                    <div class="text-center p-4 border-2 border-dashed border-[#94d2bd] rounded-lg">
+                        <div class="text-4xl mb-2">💻</div>
+                        <h4 class="font-bold">AEX Digital Hub</h4>
+                        <p class="text-sm">High-performance computing</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="text-center p-4 border-2 border-dashed border-[#ee9b00] rounded-lg">
+                        <div class="text-4xl mb-2">🔥</div>
+                        <h4 class="font-bold">Waste Heat Valorization</h4>
+                        <p class="text-sm">50-90°C thermal energy</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="text-center p-4 border-2 border-dashed border-[#0a9396] rounded-lg">
+                        <div class="text-4xl mb-2">🌲</div>
+                        <h4 class="font-bold">Hongo Biomass Processing</h4>
+                        <p class="text-sm">Decarbonized drying</p>
+                    </div>
+                    <div class="flow-arrow">➔</div>
+                    <div class="text-center p-4 border-2 border-dashed border-[#ae2012] rounded-lg">
+                        <div class="text-4xl mb-2">✈️</div>
+                        <h4 class="font-bold">Sustainable Aviation Fuel</h4>
+                        <p class="text-sm">Low-carbon intensity fuel</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="digital-engine" class="my-12">
+            <h2 class="section-title">The Digital Engine: AEX's Dual-Output Model</h2>
+            <p class="section-subtitle">AEX's data centers are reimagined as dual-output facilities. They produce valuable computation while transforming waste heat from a liability into a monetizable asset, creating an economically "antifragile" business model.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="content-card">
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">Data Center Output Reimagined</h3>
+                    <p class="text-center mb-4">For every unit of electricity consumed, AEX generates two valuable outputs. This diversification stabilizes revenue, reducing dependency on volatile computation markets.</p>
+                    <div class="chart-container">
+                        <canvas id="aexOutputChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="kpi-card">
+                        <div class="kpi-value">50-90°C</div>
+                        <div class="kpi-label">Waste Heat Temperature</div>
+                        <p class="text-sm mt-2 font-light text-[#94d2bd]">Perfectly matching the thermal needs for industrial biomass drying.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value">>50%</div>
+                        <div class="kpi-label">Moisture in Raw Biomass</div>
+                        <p class="text-sm mt-2 font-light text-[#94d2bd]">A key challenge in fuel production, solved by AEX's thermal energy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="urban-symbiosis" class="my-12">
+            <h2 class="section-title">Urban Symbiosis: AEX & Hitachi's Smart Grid</h2>
+            <p class="section-subtitle">AEX's data centers act as a massive, flexible load on the grid. By absorbing surplus renewable energy, they prevent waste, stabilize the grid, and function as a "Non-Wires Alternative," deferring costly infrastructure upgrades.</p>
+            
+            <div class="content-card">
+                <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">Curtailment Avoidance: Turning Surplus into Value</h3>
+                <p class="text-center mb-4">The chart below illustrates how AEX's flexible demand (orange area) can ramp up to consume excess renewable energy generation (blue area) that would otherwise be wasted, ensuring grid stability and monetizing every kilowatt.</p>
+                <div class="chart-container h-[400px] max-h-[450px]">
+                    <canvas id="gridBalancingChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="computational-forestry" class="my-12">
+            <h2 class="section-title">Computational Forestry: Data-Driven Growth</h2>
+            <p class="section-subtitle">AEX provides High-Performance Computing (HPC) to the Hongo Institute, enabling complex simulations that optimize forest management for better biomass yield and carbon sequestration.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="content-card">
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">Forest Growth Model Variables</h3>
+                    <p class="text-center mb-4">AEX's computing power allows researchers to model numerous environmental factors simultaneously, leading to more accurate predictions of forest health and productivity.</p>
+                    <div class="chart-container">
+                        <canvas id="forestModelChart"></canvas>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">The Digital-Natural Feedback Loop</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">🖥️</div>
+                            <div>
+                                <h4 class="font-semibold">AEX De-PIN Computing</h4>
+                                <p class="text-sm">Provides on-demand, affordable HPC for scientific modeling.</p>
+                            </div>
+                        </div>
+                        <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-start gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">🔬</div>
+                            <div>
+                                <h4 class="font-semibold">Advanced Growth Models</h4>
+                                <p class="text-sm">Hongo Institute runs complex simulations to predict carbon capture and yield.</p>
+                            </div>
+                        </div>
+                        <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-start gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">📈</div>
+                            <div>
+                                <h4 class="font-semibold">Optimized Forest Management</h4>
+                                <p class="text-sm">Data-driven strategies improve forest health and sustainability.</p>
+                            </div>
+                        </div>
+                         <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-start gap-4 p-3 bg-green-100 rounded-lg border border-green-400">
+                            <div class="text-3xl">🌳</div>
+                            <div>
+                                <h4 class="font-semibold">Superior Biomass Feedstock</h4>
+                                <p class="text-sm">Higher quality and yield for more efficient SAF production.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="green-catalyst" class="my-12">
+            <h2 class="section-title">The Green Catalyst: Decarbonizing the Biomass Supply Chain</h2>
+            <p class="section-subtitle">The direct application of AEX's waste heat to dry freshly harvested biomass is the lynchpin of the circular economy. This single step eliminates the need for fossil fuels, lowers costs, and dramatically increases the energy efficiency of the entire process.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="content-card">
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">Impact of Drying on Biomass Energy Density</h3>
+                    <p class="text-center mb-4">Drying biomass with AEX's waste heat significantly increases its energy content per unit of weight, making it a much more efficient feedstock for SAF production.</p>
+                    <div class="chart-container">
+                        <canvas id="biomassEnergyChart"></canvas>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#005f73]">The Waste Heat Valorization Process</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">💻</div>
+                            <div>
+                                <h4 class="font-semibold">AEX Data Center</h4>
+                                <p class="text-sm">Generates constant 50-90°C thermal energy.</p>
+                            </div>
+                        </div>
+                        <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">🔄</div>
+                            <div>
+                                <h4 class="font-semibold">Heat Exchanger Unit</h4>
+                                <p class="text-sm">Transfers thermal energy to a clean air stream.</p>
+                            </div>
+                        </div>
+                        <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="text-3xl">💨</div>
+                            <div>
+                                <h4 class="font-semibold">Convective Biomass Dryer</h4>
+                                <p class="text-sm">Hot air circulates, removing moisture from woodchips.</p>
+                            </div>
+                        </div>
+                         <div class="pl-6 text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="flex items-center gap-4 p-3 bg-green-100 rounded-lg border border-green-400">
+                            <div class="text-3xl">🌲</div>
+                            <div>
+                                <h4 class="font-semibold">High-Density, Dry Biomass</h4>
+                                <p class="text-sm">Ready for efficient gasification with zero fossil-fuel input for drying.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="saf-production" class="my-12">
+            <h2 class="section-title">The End Product: Sustainable Aviation Fuel (SAF)</h2>
+            <p class="section-subtitle">The entire system culminates in the production of high-quality SAF via the Fischer-Tropsch (FT) process. AEX's integration is critical for lowering the fuel's Carbon Intensity (CI) score, a key determinant of its market value and eligibility for incentives.</p>
+             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3 content-card">
+                    <h3 class="text-xl font-bold text-center mb-6 text-[#005f73]">Fischer-Tropsch SAF Production Flow</h3>
+                    <div class="relative flex flex-col space-y-4">
+                        <div class="p-4 bg-gray-100 rounded-lg text-center">
+                            <h4 class="font-bold">1. Gasification</h4>
+                            <p class="text-sm">Dried biomass is heated to 800-1400°C, creating raw syngas (CO + H₂).</p>
+                        </div>
+                        <div class="self-center text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="p-4 bg-[#e9d8a6] bg-opacity-30 rounded-lg text-center border-2 border-dashed border-[#ee9b00]">
+                            <h4 class="font-bold">2. Syngas Cleaning & Cooling</h4>
+                            <p class="text-sm">Impurities are removed. <span class="font-bold text-[#ca6702]">AEX waste heat optimizes this stage, reducing primary energy needs.</span></p>
+                        </div>
+                        <div class="self-center text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="p-4 bg-gray-100 rounded-lg text-center">
+                            <h4 class="font-bold">3. Fischer-Tropsch Synthesis</h4>
+                            <p class="text-sm">Syngas is converted to FT crude at 200-350°C in a catalytic reactor.</p>
+                        </div>
+                        <div class="self-center text-2xl font-bold text-[#0a9396]">↓</div>
+                        <div class="p-4 bg-gray-100 rounded-lg text-center">
+                            <h4 class="font-bold">4. Upgrading & Refining</h4>
+                            <p class="text-sm">FT crude is processed into drop-in Sustainable Aviation Fuel.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 content-card">
+                     <h3 class="text-xl font-bold text-center mb-6 text-[#005f73]">Lowering Carbon Intensity</h3>
+                     <p class="text-center mb-4">Using waste heat instead of fossil fuels for auxiliary processes drastically cuts the life-cycle emissions of the final SAF, making it a premium green product.</p>
+                     <div class="chart-container">
+                        <canvas id="carbonIntensityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card max-w-4xl mx-auto mt-8">
+                 <h3 class="text-xl font-bold text-center mb-6 text-[#005f73]">Key Chemical Reactions</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <div class="chem-formula">CO + 3H₂ ↔ CH₄ + H₂O</div>
+                     <div class="chem-formula">CO₂ + 4H₂ ↔ CH₄ + 2H₂O</div>
+                     <div class="chem-formula">2CO ↔ CO₂ + C</div>
+                     <div class="chem-formula">CO + H₂ ↔ C + H₂O</div>
+                 </div>
+                 <p class="text-xs text-center mt-4 text-gray-500">Undesirable side reactions in FT synthesis (methanation and carbon deposition) that must be minimized through precise process control.</p>
+            </div>
+        </section>
+        
+        <section id="roadmap" class="my-12">
+            <h2 class="section-title">Roadmap to Reality</h2>
+            <p class="section-subtitle">A pragmatic, four-phase strategy will de-risk the project, moving it from pilot validation to a position of global leadership in the circular economy.</p>
+            <div class="content-card max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <h4 class="text-lg font-bold text-[#bb3e03]">Phase 1: Joint Pilot Project</h4>
+                        <p class="text-sm">Co-locate a scaled-down SAF facility with an AEX data center for real-world validation of technical and economic synergies. Generate tangible data on efficiency and emissions reduction.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <h4 class="text-lg font-bold text-[#bb3e03]">Phase 2: Comprehensive Economic Model</h4>
+                        <p class="text-sm">Develop a detailed techno-economic analysis (TEA) and life-cycle assessment (LCA) based on pilot data to de-risk financials and secure large-scale investment.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <h4 class="text-lg font-bold text-[#bb3e03]">Phase 3: Diversify Feedstock & Energy</h4>
+                        <p class="text-sm">Explore using other feedstocks (e.g., agricultural waste) and integrating with other stranded energy sources to build long-term resilience and adaptability.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="top: 0.5rem;"></div>
+                        <h4 class="text-lg font-bold text-[#bb3e03]">Phase 4: Global Showcase</h4>
+                        <p class="text-sm">Position Hitachi City as a world-leading example of a "next-generation future city," promoting the model to attract global partners, investment, and talent.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#005f73] text-white p-6 text-center text-sm">
+        <p>&copy; 2025 Agile Energy X. All rights reserved.</p>
+        <p class="mt-2 text-[#94d2bd]">This infographic visualizes the strategic synergy between AEX, Hongo Institute, and Hitachi City.</p>
+    </footer>
+
+    <script>
+        const chartTooltipPlugin = {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const wrapLabel = (label) => {
+            const maxLen = 16;
+            if (label.length <= maxLen) return label;
+            const words = label.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxLen) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const brilliantBlues = {
+            darkBlue: '#005f73',
+            teal: '#0a9396',
+            aqua: '#94d2bd',
+            sand: '#e9d8a6',
+            gold: '#ee9b00',
+            orange: '#ca6702',
+            rust: '#bb3e03',
+            red: '#ae2012'
+        };
+
+        const aexOutputCtx = document.getElementById('aexOutputChart').getContext('2d');
+        new Chart(aexOutputCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Valuable Computation (AI, Bitcoin)', 'Valorized Waste Heat (Stranded Energy)'],
+                datasets: [{
+                    label: 'AEX Output',
+                    data: [60, 40],
+                    backgroundColor: [brilliantBlues.teal, brilliantBlues.gold],
+                    borderColor: '#ffffff',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    ...chartTooltipPlugin
+                },
+                cutout: '60%'
+            }
+        });
+
+        const gridBalancingCtx = document.getElementById('gridBalancingChart').getContext('2d');
+        new Chart(gridBalancingCtx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+                datasets: [{
+                    label: 'Surplus Renewable Energy',
+                    data: [5, 10, 30, 25, 15, 5, 2, 0, 0, 5, 10, 8],
+                    fill: true,
+                    backgroundColor: 'rgba(148, 210, 189, 0.4)',
+                    borderColor: brilliantBlues.aqua,
+                    tension: 0.4,
+                }, {
+                    label: 'AEX Flexible Demand',
+                    data: [5, 10, 30, 25, 15, 5, 2, 0, 0, 5, 10, 8],
+                    fill: true,
+                    backgroundColor: 'rgba(238, 155, 0, 0.5)',
+                    borderColor: brilliantBlues.gold,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Power (MW)' }
+                    }
+                },
+                plugins: chartTooltipPlugin
+            }
+        });
+
+        const forestModelCtx = document.getElementById('forestModelChart').getContext('2d');
+        new Chart(forestModelCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Climate', 'Soil Fertility', 'Soil Moisture', 'Sunlight (PAR)', 'Forest Density', 'Tree Age'],
+                datasets: [{
+                    label: 'Model Sensitivity',
+                    data: [9, 7, 8, 9, 6, 7],
+                    fill: true,
+                    backgroundColor: 'rgba(10, 147, 150, 0.2)',
+                    borderColor: brilliantBlues.teal,
+                    pointBackgroundColor: brilliantBlues.teal,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: brilliantBlues.teal
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: { font: { size: 12 } },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    ...chartTooltipPlugin
+                }
+            }
+        });
+
+        const biomassEnergyCtx = document.getElementById('biomassEnergyChart').getContext('2d');
+        new Chart(biomassEnergyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Raw Biomass (55% Moisture)', 'Dried Biomass (<15% Moisture)'],
+                datasets: [{
+                    label: 'Energy Density (MJ/kg)',
+                    data: [8, 18],
+                    backgroundColor: [brilliantBlues.aqua, brilliantBlues.teal],
+                    borderColor: [brilliantBlues.teal, brilliantBlues.darkBlue],
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Energy Density (MJ/kg)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    ...chartTooltipPlugin
+                }
+            }
+        });
+
+        const carbonIntensityCtx = document.getElementById('carbonIntensityChart').getContext('2d');
+        const ciLabels = ['Conventional Drying (Fossil Fuels)', 'AEX Waste Heat Integration'].map(wrapLabel);
+        new Chart(carbonIntensityCtx, {
+            type: 'bar',
+            data: {
+                labels: ciLabels,
+                datasets: [{
+                    label: 'Carbon Intensity Score (gCO2e/MJ)',
+                    data: [35, 8],
+                    backgroundColor: [brilliantBlues.red, brilliantBlues.teal],
+                    borderColor: [brilliantBlues.red, brilliantBlues.darkBlue],
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'CI Score (gCO2e/MJ)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    ...chartTooltipPlugin
+                }
+            }
+        });
+    </script>
+</body>
+</html>
